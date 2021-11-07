@@ -1,0 +1,6 @@
+git init
+git remote add origin master (the git url)
+git add . 
+git commit -m "whatever msg u want"
+git push (the first time u copy the command it gives)
+npm start
