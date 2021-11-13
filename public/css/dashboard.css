@@ -2,6 +2,14 @@
     margin: 10px 0px;
 }
 
-.card p {
-    margin: 0rem 1.25rem;
+.card .card-date-tag {
+    margin: 0.5rem 1rem;
+}
+
+.card-profile-img-container {
+    padding: 16px;
+}
+
+.card-profile-img-container img {
+    border-radius: 50%;
 }
