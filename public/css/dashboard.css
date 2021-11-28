@@ -1,3 +1,25 @@
+.container {
+    max-width: 1170px;
+}
+.post-form-container {
+    margin: 20px 0px;
+}
+.button-post-this {
+    background-color:whitesmoke;
+    color: black;
+}
+.post-form-container > form > textarea {
+    width: 100%;
+    height: 15vh;
+    border-radius: 5px;
+    border:#dfdcdc solid 1px;
+    padding: 10px;
+    resize: none;
+}
+.button-container {
+    text-align: right;
+}
+
 .card {
     margin: 10px 0px;
 }
@@ -12,4 +34,35 @@
 
 .card-profile-img-container img {
     border-radius: 50%;
+}
+
+.container {
+    max-width: 1170px;
+}
+.post-form-container {
+    margin: 20px 0px;
+}
+.button-post-this {
+    background-color:whitesmoke;
+    color: black;
+}
+.post-form-container > form > textarea {
+    width: 100%;
+    height: 15vh;
+    border-radius: 5px;
+    border:#dfdcdc solid 1px;
+    padding: 10px;
+    resize: none;
+}
+.button-container {
+    text-align: right;
+}
+
+@media screen and (max-width: 569px) {
+    .profile-container {
+        display: none;
+    }
+    .posts-content {
+        width: 100%;
+    }
 }
