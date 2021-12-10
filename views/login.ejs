@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/login.css">
+    <!-- <script src="database.js"></script> -->
     <title>Document</title>
 </head>
 
@@ -15,13 +16,17 @@
     <div  style="text-align: center; border: 5px solid; width:600px; margin:0 auto;margin-top: 20px;">
         <h1 style="text-align: center;">Newest social media in town</h1>
         <h3 style="text-align: center;">New to us?<a href="/register">Sign up for free!</a></h3>
-        <input type="text" placeholder="Username" style="width: 350px;">
-        <input type="password" placeholder="Password(8+ characters)" style="width: 350px;">
-        <br>
+        <form action="/loginUser" method="POST">
+            <input name="username" id="username" type="text" placeholder="Username" style="width: 350px;">
+            <input name="password" id="password" type="password" placeholder="Password(8+ characters)" style="width: 350px;">
+            <input id="login" type="submit" style="background-color:darkslategray;margin-top: 10px;border-radius: 20px;width: 350px"value="Log in">
+        </form>
+        <p><%= message %></p>
+
         <!--Need to create a password reset page-->
         <a href="/profile">Forgot password?</a>
         <br>
-        <a href="/dashboard"><button  style="background-color:darkslategray;margin-top: 10px;border-radius: 20px;width: 350px;">Log in</button></a>
+
         <hr>
         <button style="background-color:whitesmoke;border-radius: 20px;width: 350px;">Log in with google</button>
         <button style="background-color:rgb(25, 87, 87);border-radius: 20px;width: 350px;">Log in</button>

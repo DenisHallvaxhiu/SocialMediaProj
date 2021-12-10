@@ -1,12 +1,16 @@
+const { render } = require('ejs');
 const express = require('express')
 const app = express()
 const port =  process.env.PORT || 3000
+const connection = require('./database');
 
 app.use(express.static('public'))
+app.use(express.json())
+app.use(express.urlencoded())
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-  res.render('login');
+  res.render('login', { message: '' });
 })
 
 app.get('/register', (req, res) => {
@@ -49,11 +53,58 @@ app.get('/profile', (req, res) => {
   res.render('profile');
 })
 
+app.post('/registerUser',(req,res)=>{
+  let userName = req.body.userName
+  let firstName = req.body.fName
+  let lastName = req.body.lName
+  let age = req.body.age
+  let email = req.body.email
+  let password = req.body.password
 
-app.get('/loginUser', (req, res) => {
+  connection.query("SELECT userName FROM users WHERE userName = ?",[userName],(err,result,fields)=>{
+    if(err){
+       console.log(err)
+    }
+    if (result.length >0){
+        console.log(userName +" exists")
+    }else
+      {
+        connection.query("INSERT INTO `socialmedia`.`users` (`userName`, `password`, `firstName`, `lastName`, `email`, `age`) VALUES ('"+userName+"','"+password+"','"+firstName+"','"+lastName+"','"+email+"','"+age+"')"
+       ,(err,result)=>{
+        if(err){
+          console.log(err)
+        }
+        else{
+          console.log(userName + " registerd")
+          res.redirect("/")
+        }
+        });
+      }
+    })
+})
+
+app.post('/loginUser', (req, res) => {
+
+  let username = req.body.username
+  let password = req.body.password
+
   // logic that authrencates the user
   // call thee database
   // authenticate if user is existing in the database
+  connection.query("SELECT userName FROM users WHERE userName = ? AND password = ?",[username,password],(err,result,fields)=>{
+        if(err){
+           console.log(err)
+        }
+        if (result.length >0){
+            //console.log(result[0].userName)
+            console.log("exists")
+            res.redirect("/dashboard")
+        }else
+          {
+            res.render('login', { message: 'The username does not exist' })
+            console.log("doesnt")
+          }
+        })
 })
 
 

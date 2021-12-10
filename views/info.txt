@@ -6,3 +6,11 @@ git push (the first time u copy the command it gives)
 npm start
 
 git pull to retrive info
+
+
+
+mysql INSERT{
+    INSERT INTO `socialmedia`.`users`(
+`userID`,`userName`,`password`,`firstName`,`lastName`,`email`,`age`) VALUES ('001','jimmy2',
+'1234','Jimmy','Tran','jimmy@bhcc.edu','24')
+}
