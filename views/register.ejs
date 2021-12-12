@@ -88,9 +88,6 @@ a {
     <label for="lastname"><b>Last Name</b></label>
     <input type="text" placeholder="Enter your last name" name="lName" id="lName" required>
 
-    <label for="age"><b>Age</b></label>
-    <input type="text" placeholder="Enter your age" name="age" id="age" required>
-
     <label for="username"><b>Username</b></label>
     <input type="text" placeholder="Enter your username" name="userName" id="userName" required>
 
@@ -98,11 +95,11 @@ a {
     <input type="password" placeholder="Enter Password" name="password" id="psw" required>
 
     <label for="psw-repeat"><b>Repeat Password</b></label>
-    <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
+    <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw2" required>
     <hr>
     <p>By creating an account you agree to our <a href="">Terms & Privacy</a>.</p>
-
-    <button type="submit" class="register">Register</button>
+    
+    <button type="submit" class="register" id="register">Register</button>
   </div>
   
 </form>
@@ -110,6 +107,35 @@ a {
 <div class="container signin">
   <p>Already have an account? <a href="/">Sign in</a>.</p>
 </div>
+
+<script>
+  let pass1 = document.getElementById("psw")
+  let pass2 = document.getElementById("psw2")
+  let button = document.getElementById("register");
+  button.disabled =true;
+  let pas1;
+  let pas2;
+
+  //password validation
+  pass1.addEventListener("change",function(e){
+    pas1=e.target.value
+
+    if(pas1===pas2)
+      button.disabled =false;
+    else
+      button.disabled = true
+  })
+  pass2.addEventListener("change",function(e){
+    pas2=e.target.value;
+
+    if(pas1===pas2)
+      button.disabled =false;
+    else
+      button.disabled = true
+  })
+
+  
+</script>
 
 </body>
 </html>

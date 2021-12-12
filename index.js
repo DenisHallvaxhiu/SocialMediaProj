@@ -57,19 +57,19 @@ app.post('/registerUser',(req,res)=>{
   let userName = req.body.userName
   let firstName = req.body.fName
   let lastName = req.body.lName
-  let age = req.body.age
   let email = req.body.email
   let password = req.body.password
 
-  connection.query("SELECT userName FROM users WHERE userName = ?",[userName],(err,result,fields)=>{
+  connection.query("SELECT username FROM user WHERE username = ?",[userName],(err,result,fields)=>{
     if(err){
        console.log(err)
     }
-    if (result.length >0){
+    else if (result.length >0){
         console.log(userName +" exists")
-    }else
+    }
+    else
       {
-        connection.query("INSERT INTO `socialmedia`.`users` (`userName`, `password`, `firstName`, `lastName`, `email`, `age`) VALUES ('"+userName+"','"+password+"','"+firstName+"','"+lastName+"','"+email+"','"+age+"')"
+        connection.query("INSERT INTO  user (`username`, `password`, `firstName`, `lastName`, `email`) VALUES ('"+userName+"','"+password+"','"+firstName+"','"+lastName+"','"+email+"')"
        ,(err,result)=>{
         if(err){
           console.log(err)
@@ -91,7 +91,7 @@ app.post('/loginUser', (req, res) => {
   // logic that authrencates the user
   // call thee database
   // authenticate if user is existing in the database
-  connection.query("SELECT userName FROM users WHERE userName = ? AND password = ?",[username,password],(err,result,fields)=>{
+  connection.query("SELECT userName FROM user WHERE userName = ? AND password = ?",[username,password],(err,result,fields)=>{
         if(err){
            console.log(err)
         }
