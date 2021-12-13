@@ -1,4 +1,3 @@
-const { render } = require('ejs');
 const express = require('express')
 const app = express()
 const port =  process.env.PORT || 3000
@@ -25,24 +24,28 @@ app.get('/dashboard', (req, res) => {
       description: "Lorem Ipsum is industry. Lorem Ipsum has been theindustry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leapLorem Ipsum is industry. Lorem Ipsum has been theindustry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap",
       date: 'May 22, 2021',
       postedBy: 'Denis@gmail.com',
-      profileUrl: 'https://cdn4.iconfinder.com/data/icons/user-people-2/48/6-512.png'
+      profileUrl: 'https://cdn4.iconfinder.com/data/icons/user-people-2/48/6-512.png',
+      mood: 'Sad'
     },
     {
       description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theindustry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap",
       date: 'April 20, 2021',
       postedBy: 'Khizer@gmail.com',
-      profileUrl: 'https://cdn4.iconfinder.com/data/icons/user-people-2/48/6-512.png'
+      profileUrl: 'https://cdn4.iconfinder.com/data/icons/user-people-2/48/6-512.png',
+      mood: 'Happy'
     },
     {
       description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theindustry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap",
       date: 'November 20, 2021',
       postedBy: 'jimmytran16@gmail.com',
-      profileUrl: 'https://cdn4.iconfinder.com/data/icons/user-people-2/48/6-512.png'
+      profileUrl: 'https://cdn4.iconfinder.com/data/icons/user-people-2/48/6-512.png',
+      mood: 'Happy'
     },{
       description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theindustry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap",
       date: 'December 22, 2021',
       postedBy: 'jimmytran16@gmail.com',
-      profileUrl: 'https://cdn4.iconfinder.com/data/icons/user-people-2/48/6-512.png'
+      profileUrl: 'https://cdn4.iconfinder.com/data/icons/user-people-2/48/6-512.png',
+      mood: 'Happy'
     }
   ]
   // we will pass in a variable called 'posts' that will have the value of 'data' to the ejs/HTML webpage
