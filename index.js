@@ -1,5 +1,6 @@
 const { render } = require('ejs');
 const express = require('express')
+const bcrypt = require('bcrypt')
 const app = express()
 const port =  process.env.PORT || 3000
 const connection = require('./database');
@@ -53,37 +54,39 @@ app.get('/profile', (req, res) => {
   res.render('profile');
 })
 
-app.post('/registerUser',(req,res)=>{
+app.post('/registerUser',async(req,res)=>{
   let userName = req.body.userName
   let firstName = req.body.fName
   let lastName = req.body.lName
   let email = req.body.email
   let password = req.body.password
+  const hashedPassword = await bcrypt.hash(password,10);
 
-  connection.query("SELECT username FROM user WHERE username = ?",[userName],(err,result,fields)=>{
-    if(err){
-       console.log(err)
-    }
-    else if (result.length >0){
-        console.log(userName +" exists")
-    }
-    else
-      {
-        connection.query("INSERT INTO  user (`username`, `password`, `firstName`, `lastName`, `email`) VALUES ('"+userName+"','"+password+"','"+firstName+"','"+lastName+"','"+email+"')"
-       ,(err,result)=>{
-        if(err){
-          console.log(err)
-        }
-        else{
-          console.log(userName + " registerd")
-          res.redirect("/")
-        }
-        });
+  try {
+    connection.query("SELECT username FROM user WHERE username = ?",[userName],(err,result,fields)=>{
+      if (result.length >0){
+          console.log(userName +" exists")
       }
-    })
+      else
+        {
+          connection.query("INSERT INTO  user (`username`, `password`, `firstName`, `lastName`, `email`) VALUES ('"+userName+"','"+hashedPassword+"','"+firstName+"','"+lastName+"','"+email+"')"
+         ,(err,result)=>{
+          if(err){
+            console.log(err)
+          }
+          else{
+            console.log(userName + " registerd")
+            res.redirect("/")
+          }
+          });
+        }
+      })
+  } catch (error) {
+    
+  }
 })
 
-app.post('/loginUser', (req, res) => {
+app.post('/loginUser',async (req, res) => {
 
   let username = req.body.username
   let password = req.body.password
@@ -91,20 +94,25 @@ app.post('/loginUser', (req, res) => {
   // logic that authrencates the user
   // call thee database
   // authenticate if user is existing in the database
-  connection.query("SELECT userName FROM user WHERE userName = ? AND password = ?",[username,password],(err,result,fields)=>{
-        if(err){
-           console.log(err)
+  try {
+    connection.query("SELECT password FROM user WHERE userName = ?",[username],async(err,result,fields)=>{
+      if(err){
+         console.log(err)
+      }
+      if (await bcrypt.compare(password,result[0].password)){
+          console.log(result[0].password)
+          console.log("exists")
+          res.redirect("/dashboard")
+      }else
+        {
+          console.log(result)
+          res.render('login', { message: 'The username does not exist' })
         }
-        if (result.length >0){
-            //console.log(result[0].userName)
-            console.log("exists")
-            res.redirect("/dashboard")
-        }else
-          {
-            res.render('login', { message: 'The username does not exist' })
-            console.log("doesnt")
-          }
-        })
+      })
+  } catch (error) {
+    
+  }
+ 
 })
 
 
