@@ -17,8 +17,35 @@
         <div class="post-form-container">
             <form action="#">
                 <textarea type="text" placeholder="What are your thoughts....." id="text-area-thoughts"></textarea>
-                <div class="button-container">
-                    <button  type="submit" class="btn button-post-this">Post this!</button>
+                <div class="emotion-button-container">
+                    <div class="emotion-container">
+                        <div>
+                            <p>Mood:</p>
+                        </div>
+                        <div class="emotion">
+                            <label for="emotion-mad">Happy</label>
+                            <input type="radio" name="emotionSelection" id="emotion-happy" />
+                        </div>
+                        <div class="emotion">
+                            <label for="emotion-sad">Sad</label>
+                            <input type="radio" name="emotionSelection" id="emotion-sad" />
+                        </div>
+                        <div class="emotion">
+                            <label for="emotion-okay">Okay</label>
+                            <input type="radio" name="emotionSelection" id="emotion-okay" />
+                        </div>
+                        <div class="emotion">
+                            <label for="emotion-mad">Mad</label>
+                            <input type="radio" name="emotionSelection" id="emotion-mad" />
+                        </div>
+                        <div class="emotion">
+                            <label for="emotion-other">Other</label>
+                            <input type="radio" name="emotionSelection" id="emotion-mad" />
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <button  type="submit" class="btn button-post-this">Post this!</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -29,6 +56,11 @@
                     <div class="profile-container col-2">
                         <div class="card-profile-img-container">
                             <img src="<%= posts[i]['profileUrl'] %>" width="100%" />
+                        </div>
+                        <div style="text-align: center;">
+                            <p>
+                                Mood: <%= posts[i]['mood'] %>
+                            </p>
                         </div>
                     </div>
                     <div class="posts-content col-10">
