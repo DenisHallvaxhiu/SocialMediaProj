@@ -78,7 +78,7 @@
                 <div class="row">
                     <div class="profile-container col-2">
                         <div class="card-profile-img-container">
-                            <img src="<%= posts[i]['profileUrl'] %>" width="100%" />
+                            <img src="<%= posts[i]['picture'] %>" width="100%" />
                         </div>
                         <div style="text-align: center;">
                             <p>
@@ -88,11 +88,11 @@
                     </div>
                     <div class="posts-content col-10">
                         <div class="card-body">
-                            <%= posts[i]['description'] %>
+                            <%= posts[i]['thought'] %>
                         </div>
                         <div class="card-info-info">
                             <p class="card-date-tag"><small class="text-muted">
-                                    <%= posts[i]['date'] %> <small> by <%= posts[i]['postedBy'] %></small>
+                                    <%= posts[i]['date'] %> <small> by <%= posts[i]['username'] %></small>
                                 </small></p>
                         </div>
                     </div>
