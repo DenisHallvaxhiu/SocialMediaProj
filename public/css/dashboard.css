@@ -147,6 +147,7 @@ header .navigation .menu{
 
 .container {
     max-width: 1170px;
+    padding-top:10em;
 }
 .post-form-container {
     margin: 20px 0px;

@@ -38,8 +38,8 @@
 
     <div class="container">
         <div class="post-form-container">
-            <form action="#">
-                <textarea type="text" placeholder="What are your thoughts....." id="text-area-thoughts"></textarea>
+            <form action="/createPost" method="post">
+                <textarea name="thoughtsFields" type="text" placeholder="What are your thoughts....." id="text-area-thoughts"></textarea>
                 <div class="emotion-button-container">
                     <div class="emotion-container">
                         <div>
@@ -47,23 +47,23 @@
                         </div>
                         <div class="emotion">
                             <label for="emotion-mad">Happy</label>
-                            <input type="radio" name="emotionSelection" id="emotion-happy" />
+                            <input type="radio" name="emotionSelection" id="emotion-happy" value="happy" />
                         </div>
                         <div class="emotion">
                             <label for="emotion-sad">Sad</label>
-                            <input type="radio" name="emotionSelection" id="emotion-sad" />
+                            <input type="radio" name="emotionSelection" id="emotion-sad" value="sad" />
                         </div>
                         <div class="emotion">
                             <label for="emotion-okay">Okay</label>
-                            <input type="radio" name="emotionSelection" id="emotion-okay" />
+                            <input type="radio" name="emotionSelection" id="emotion-okay" value="okay"/>
                         </div>
                         <div class="emotion">
                             <label for="emotion-mad">Mad</label>
-                            <input type="radio" name="emotionSelection" id="emotion-mad" />
+                            <input type="radio" name="emotionSelection" id="emotion-mad" value="mad"/>
                         </div>
                         <div class="emotion">
                             <label for="emotion-other">Other</label>
-                            <input type="radio" name="emotionSelection" id="emotion-mad" />
+                            <input type="radio" name="emotionSelection" id="emotion-other" value="other"/>
                         </div>
                     </div>
                     <div class="button-container">

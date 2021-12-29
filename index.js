@@ -23,11 +23,11 @@ app.use(session({ secret: 'thisissecret' }))
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash()); // use connect-flash for flash messages stored in session
-app.use((req,res,next) => {
-  console.log(req.user)
-  console.log(req.session)
-  next();
-})
+// app.use((req,res,next) => {
+//   console.log(req.user)
+//   console.log(req.session)
+//   next();
+// })
 
 // ROUTES
 app.get('/', (req, res) => {
@@ -74,6 +74,16 @@ app.get('/dashboard', middlewares.isLoggedIn, (req, res) => {
   ]
   // we will pass in a variable called 'posts' that will have the value of 'data' to the ejs/HTML webpage
   res.render('dashboard', { posts: posts });
+})
+
+// Endpoint to handle the creation of a user's post
+app.post('/createPost', (req, res) => {
+  console.log(req.body); 
+  console.log('the session', req.session.passport.user); 
+  // Extract the emotion, thoughts, and the username 
+  // Query to save the information
+  // redirect back to the dashbard
+  res.redirect('/dashboard');
 })
 
 app.get('/profile', (req, res) => {
