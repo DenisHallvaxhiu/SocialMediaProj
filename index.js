@@ -81,9 +81,31 @@ app.post('/createPost', (req, res) => {
   console.log(req.body); 
   console.log('the session', req.session.passport.user); 
   // Extract the emotion, thoughts, and the username 
+
+  let thought = req.body.thoughtsFields;
+  let emotion = req.body.emotionSelection;
+  let today = new Date();
+  let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  let user = req.session.passport.user;
+
+
+  console.log(thought + "  " + emotion + "  " + date + "  " + user)
+  try{
+  connection.query("INSERT INTO post (`mood`, `picture`, `date`, `username`, `thought`) VALUES (?,?,?,?,?)",[emotion,"https://cdn4.iconfinder.com/data/icons/user-people-2/48/6-512.png",date,user,thought], (err, result) => {
+            if (err) {
+              console.log(err)
+            }
+            else {
+              console.log(user + " shared their thought")
+              res.redirect("/dashboard")
+            }
+          });
+        }
+        catch(e){
+
+        }
   // Query to save the information
   // redirect back to the dashbard
-  res.redirect('/dashboard');
 })
 
 app.get('/profile', (req, res) => {
