@@ -40,22 +40,23 @@ app.get('/register', (req, res) => {
   res.render('register');
 })
 
+
 app.get('/dashboard', middlewares.isLoggedIn, (req, res) => {
   console.log(req.user);
   // data: pretend like this is the data that is returned after we called it from the database
   // data: this is an array that contains objects which represents data of a particular post
-  
-  connection.query("SELECT * FROM post ORDER BY ID DESC",(err, result)=>{
-   if(err)
-    redirect("/dashboard")
-    else{
+
+  connection.query("SELECT * FROM post ORDER BY ID DESC", (err, result) => {
+    if (err)
+      redirect("/dashboard")
+    else {
       const posts = result;
       res.render('dashboard', { posts: posts });
     }
   })
-  
-  
-  
+
+
+
   // const posts = [
   //   {
   //     description: "Lorem Ipsum is industry. Lorem Ipsum has been theindustry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leapLorem Ipsum is industry. Lorem Ipsum has been theindustry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap",
@@ -90,40 +91,50 @@ app.get('/dashboard', middlewares.isLoggedIn, (req, res) => {
 
 // Endpoint to handle the creation of a user's post
 app.post('/createPost', (req, res) => {
-  console.log(req.body); 
-  console.log('the session', req.session.passport.user); 
+  console.log(req.body);
+  console.log('the session', req.session.passport.user);
   // Extract the emotion, thoughts, and the username 
 
   let thought = req.body.thoughtsFields;
   let emotion = req.body.emotionSelection;
   let today = new Date();
-  let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   let user = req.session.passport.user;
 
 
   console.log(thought + "  " + emotion + "  " + date + "  " + user)
-  try{
-  connection.query("INSERT INTO post (`mood`, `picture`, `date`, `username`, `thought`) VALUES (?,?,?,?,?)",[emotion,"https://cdn4.iconfinder.com/data/icons/user-people-2/48/6-512.png",date,user,thought], (err, result) => {
-            if (err) {
-              console.log(err)
-            }
-            else {
-              console.log(user + " shared their thought")
-              res.redirect("/dashboard")
-            }
-          });
-        }
-        catch(e){
+  try {
+    connection.query("INSERT INTO post (`mood`, `picture`, `date`, `username`, `thought`) VALUES (?,?,?,?,?)", [emotion, "https://cdn4.iconfinder.com/data/icons/user-people-2/48/6-512.png", date, user, thought], (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      else {
+        console.log(user + " shared their thought")
+        res.redirect("/dashboard")
+      }
+    });
+  }
+  catch (e) {
 
-        }
+  }
   // Query to save the information
 
-  
+
   // redirect back to the dashbard
 })
 
 app.get('/profile', (req, res) => {
-  res.render('profile');
+
+  let username = req.session.passport.user;
+
+  connection.query("SELECT * FROM post WHERE username = ? ORDER BY ID DESC;", [username], (err, result) => {
+    if (err)
+      res.render('profile', { posts: [], message: 'There was an error loading the posts' });
+    else {
+      const posts = result;
+      res.render('profile', { posts: posts });
+    }
+  })
 })
 
 app.post('/registerUser', async (req, res) => {
