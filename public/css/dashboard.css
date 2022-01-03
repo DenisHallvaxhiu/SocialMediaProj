@@ -69,6 +69,7 @@ header .navigation .menu{
 }
 
 .menu-item:hover .sub-menu{
+    right: 1px;
     pointer-events: all;
     transform: translate(0);
     opacity: 1;
@@ -79,11 +80,12 @@ header .navigation .menu{
     padding: 7px 7px;
     cursor: pointer;
     box-shadow: inset 0px -30px 5px -30px rgba(255, 255, 255, 0.2);
-    color: #fff;
+    color: rgb(255, 255, 255) ;
     font-style: 1em;
     text-decoration: none;
-    padding: 15px 30px;
-    margin-left: -2em;
+    padding: 15px 15px;
+    margin-left: 1em;
+    margin-right: 1em;
 }
 
 .menu-item .sub-menu .sub-item:last-child:hover{
