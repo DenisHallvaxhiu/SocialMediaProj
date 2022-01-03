@@ -1,4 +1,4 @@
-function isLoggedIn(req, res, next) {
+function isAuthenticate(req, res, next) {
 
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated())
@@ -8,4 +8,4 @@ function isLoggedIn(req, res, next) {
     res.redirect('/');
 }
 
-module.exports = { isLoggedIn }
+module.exports = { isAuthenticate }
