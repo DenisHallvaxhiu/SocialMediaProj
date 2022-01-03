@@ -1,3 +1,4 @@
+/*  NAVIGATION STYLING  */
 *{
     margin: 0;
     padding: 0;
@@ -91,15 +92,42 @@ header .navigation .menu{
 
 
 
+/*  DASHBOARD STYLING  */
+
+.row {
+    display: flex;
+}
+
 .container {
     max-width: 1170px;
+    margin: 0 auto;
+    padding: 0px 40px;
 }
 .post-form-container {
     margin: 20px 0px;
 }
+
+.profile-container {
+    flex: 1;
+}
+
+.posts-content {
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+} 
+
 .button-post-this {
-    background-color:whitesmoke;
+    background-color:#f7f7f7;
+    border-radius: 10px;
+    border: none;
+    padding: 12px;
     color: black;
+}
+
+.button-post-this :active {
+    border-color: black;
 }
 
 .emotion-button-container {
@@ -131,6 +159,9 @@ header .navigation .menu{
 
 .card {
     margin: 10px 0px;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+    padding: 12px;
 }
 
 .card .card-date-tag {
@@ -143,6 +174,14 @@ header .navigation .menu{
 
 .card-profile-img-container img {
     border-radius: 50%;
+}
+
+.card-body {
+    flex: 1;
+}
+
+.card-info-info {
+    flex: 1;
 }
 
 .container {
