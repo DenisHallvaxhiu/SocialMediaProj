@@ -40,7 +40,7 @@
         <img id="top_pic" src="https://i.pinimg.com/originals/d5/32/85/d5328537c1da64a96c15d094bfc31f7a.jpg" alt="">
     </header>
     <!-- Main class where we show all the posts we have published -->
-    <main class="main_content" contenteditable="">
+    <main class="main_content">
         <% for (var i=0; i < posts.length; i++) { %>
             <div class="card">
                 <div class="row">
@@ -50,7 +50,7 @@
                         </div>
                         <div style="text-align: center;">
                             <p>
-                                Mood: <%= posts[i]['mood'] %>
+                                Mood: &#<%= posts[i]['mood'] %>
                             </p>
                         </div>
                     </div>
