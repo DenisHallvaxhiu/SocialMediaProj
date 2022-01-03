@@ -99,8 +99,7 @@ body{
     margin: 10px;
     height: 300px;
     grid-column: 1/5;
-    /* background-image: url("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*"); */
-}
+    }
 #top_pic{
     object-fit: cover;
     height: 350px;
