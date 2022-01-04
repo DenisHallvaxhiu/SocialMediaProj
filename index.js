@@ -33,7 +33,6 @@ app.get('/',loggedIn.isLoggedIn, (req, res) => {
 })
 
 app.get('/register', (req, res) => {
-  console.log(req.user)
   res.render('register');
 })
 
@@ -44,9 +43,8 @@ app.get('/logOut',middlewares.isAuthenticate,(req,res)=>{
 
 
 app.get('/dashboard', middlewares.isAuthenticate, (req, res) => {
-  console.log(req.user);
 
-  connection.query("SELECT * FROM post ORDER BY ID DESC", (err, result) => {
+  connection.query("SELECT p.*, u.picture FROM Post p, User u WHERE p.username = u.username ORDER BY ID DESC", (err, result) => {
     if (err)
       redirect("/dashboard")
     else {
@@ -58,8 +56,6 @@ app.get('/dashboard', middlewares.isAuthenticate, (req, res) => {
 
 // Endpoint to handle the creation of a user's post
 app.post('/createPost',middlewares.isAuthenticate, (req, res) => {
-  console.log(req.body);
-  console.log('the session', req.session.passport.user);
   // Extract the emotion, thoughts, and the username 
 
   let thought = req.body.thoughtsFields;
@@ -68,15 +64,12 @@ app.post('/createPost',middlewares.isAuthenticate, (req, res) => {
   let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   let user = req.session.passport.user;
 
-
-  console.log(thought + "  " + emotion + "  " + date + "  " + user)
   try {
-    connection.query("INSERT INTO post (`mood`, `picture`, `date`, `username`, `thought`) VALUES (?,?,?,?,?)", [emotion, "https://cdn4.iconfinder.com/data/icons/user-people-2/48/6-512.png", date, user, thought], (err, result) => {
+    connection.query("INSERT INTO post (`mood`, `date`, `username`, `thought`) VALUES (?,?,?,?)", [emotion,  date, user, thought], (err, result) => {
       if (err) {
         console.log(err)
       }
       else {
-        console.log(user + " shared their thought")
         res.redirect("/dashboard")
       }
     });
@@ -90,13 +83,13 @@ app.post('/createPost',middlewares.isAuthenticate, (req, res) => {
 app.get('/profile',middlewares.isAuthenticate, (req, res) => {
 
   let username = req.session.passport.user;
-
-  connection.query("SELECT * FROM post WHERE username = ? ORDER BY ID DESC;", [username], (err, result) => {
+//SELECT p.*, u.firstName, u.lastName FROM Post p, User u WHERE p.username = 'Denis24' AND u.username = 'Denis24' ORDER BY ID DESC;
+  connection.query("SELECT * FROM Post  WHERE username = ?  ORDER BY ID DESC;", [username,username], (err, result) => {
     if (err)
       res.render('profile', { posts: [], message: 'There was an error loading the posts' });
     else {
       const posts = result;
-      res.render('profile', { posts: posts });
+      res.render('profile', { posts: posts,name:req.user.firstName + " " + req.user.lastName, description:req.user.description,picture:req.user.picture});
     }
   })
 })
@@ -122,7 +115,6 @@ app.post('/registerUser', async (req, res) => {
 
   try {
     connection.query("SELECT username FROM user WHERE username = ?", [userName], (err, result, fields) => {
-      if (err) console.log(err);
       if (result.length > 0) {
         console.log(userName + " exists")
       }
@@ -133,7 +125,6 @@ app.post('/registerUser', async (req, res) => {
               console.log(err)
             }
             else {
-              console.log(userName + " registerd")
               res.redirect("/")
             }
           });

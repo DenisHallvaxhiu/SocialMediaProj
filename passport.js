@@ -25,7 +25,7 @@ module.exports = function (passport) {
     // used to deserialize the user - to store into the req.user 
     passport.deserializeUser(function (username, done) {
         connection.query('SELECT * FROM User WHERE username = ?', [username], (err, user) => {
-            done(err, { username: user[0].username, firstName: user[0].firstName, lastName: user[0].lastName })
+            done(err, { username: user[0].username, firstName: user[0].firstName, lastName: user[0].lastName , description: user[0].description,picture:user[0].picture})
         })
     });
 

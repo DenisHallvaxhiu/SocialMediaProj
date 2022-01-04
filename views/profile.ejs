@@ -12,7 +12,7 @@
 <body>
    
     <header id="header">
-        <a href="#" class="logo">Social Media</a>
+        <a href="#" class="logo">Dog Media</a>
         <div class="navigation">
             <ul class="menu">
                 <li class="menu-item"><a href="#">Search Bar</a></li>
@@ -35,7 +35,7 @@
 </html><div class="parent">
     <!-- Header class where we display profile and top picture -->
     <header id="header2" class="header">
-        <img id="profile_pic" src="https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg" alt="">
+        <img id="profile_pic" src=<%=picture%> alt="">
         <img id="top_pic" src="https://i.pinimg.com/originals/d5/32/85/d5328537c1da64a96c15d094bfc31f7a.jpg" alt="">
     </header>
     <!-- Main class where we show all the posts we have published -->
@@ -45,7 +45,7 @@
                 <div class="row">
                     <div class="profile-container col-2">
                         <div class="card-profile-img-container">
-                            <img src="<%= posts[i]['picture'] %>" width="100%" />
+                            <img src="<%=picture%>" width="100%" />
                         </div>
                         <div style="text-align: center;">
                             <p>
@@ -76,11 +76,8 @@
     <!-- Description class where there will be a small bio of the profile -->
      <!-- Loop through the posts (array) variable that is coming from the request handler from index.js and generate the HTML posts with it's data -->
     <div class="description">
-    <h1>Khizar Malik!</h1>
-    <p >Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore ex minima perferendis natus labore, ipsam ullam at aliquam dolores. Excepturi ad dignissimos minima consectetur fuga, cum rerum ab suscipit dolores.
-    Repellendus architecto quidem eum expedita reprehenderit eos magni eveniet earum minus! Maxime deleniti quia placeat, dolor hic nisi mollitia libero voluptates, aspernatur iusto dolore eaque suscipit doloribus id, quibusdam ea?
-    Ea fuga magnam debitis repudiandae, aspernatur dolorum porro delectus quisquam recusandae exercitationem illo serunt id sed nulla optio totam reiciendis nesciunt laborum corrupti odit consequuntur sapiente provident.
-    Fugiat est obcaecsimus aut inventore, enim minus id laboriosam saepe maxime excepturi earum ratione assumenda temporibus us quia consequatur adipisci nulla voluptatibus. Minus libero quas quo!</p>
+    <h1><%=name%></h1>
+    <p ><%=description%></p>
     </div>
 </div>
 </body>
