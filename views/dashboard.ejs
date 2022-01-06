@@ -34,7 +34,8 @@
     <div class="container">
         <div class="post-form-container">
             <form action="/createPost" method="post">
-                <textarea name="thoughtsFields" type="text" placeholder="What are your thoughts....." id="text-area-thoughts"></textarea>
+                <textarea name="thoughtsFields" type="text" placeholder="What are your thoughts....."
+                    id="text-area-thoughts"></textarea>
                 <div class="emotion-button-container">
                     <div class="emotion-container">
                         <div>
@@ -50,15 +51,15 @@
                         </div>
                         <div class="emotion">
                             <label for="emotion-okay">&#128526</label>
-                            <input type="radio" name="emotionSelection" id="emotion-okay" value="128526"/>
+                            <input type="radio" name="emotionSelection" id="emotion-okay" value="128526" />
                         </div>
                         <div class="emotion">
                             <label for="emotion-mad">&#128532</label>
-                            <input type="radio" name="emotionSelection" id="emotion-mad" value="128532"/>
+                            <input type="radio" name="emotionSelection" id="emotion-mad" value="128532" />
                         </div>
                         <div class="emotion">
                             <label for="emotion-other">Other</label>
-                            <input type="radio" name="emotionSelection" id="emotion-other" value="other"/>
+                            <input type="radio" name="emotionSelection" id="emotion-other" value="other" />
                         </div>
                     </div>
                     <div class="button-container">
@@ -87,7 +88,9 @@
                         </div>
                         <div class="card-info-info">
                             <p class="card-date-tag"><small class="text-muted">
-                                    <i><%= posts[i]['date'] %></i> <small> by <%= posts[i]['username'] %></small>
+                                    <i>
+                                        <%= posts[i]['date'] %>
+                                    </i> <small> by <%= posts[i]['username'] %></small>
                                 </small></p>
                         </div>
                     </div>
@@ -95,23 +98,24 @@
             </div>
             <% } %>
     </div>
-<script>
-    // disable the post button on render
-    var postButton = document.getElementById('button-post-this');
-    postButton.disabled = true;
-    postButton.style.background = '#cccccc';
-    postButton.style.color = '#666666';
+    <script>
+        // disable the post button on render
+        var postButton = document.getElementById('button-post-this');
+        postButton.disabled = true;
+        postButton.style.background = '#cccccc';
+        postButton.style.color = '#666666';
 
-    // add an onclick to each emoji selection, once clicked enable the post button 
-    var emojiOptions = document.getElementsByTagName('input');
-    for(var i in emojiOptions) {
-        emojiOptions[i].onclick = function(e) {
-            postButton.disabled = false;
-            postButton.style.background = 'whitesmoke';
-            postButton.style.border = 'none';
-            postButton.style.color = 'black';
+        // add an onclick to each emoji selection, once clicked enable the post button 
+        var emojiOptions = document.getElementsByTagName('input');
+        for (var i in emojiOptions) {
+            emojiOptions[i].onclick = function (e) {
+                postButton.disabled = false;
+                postButton.style.background = 'whitesmoke';
+                postButton.style.border = 'none';
+                postButton.style.color = 'black';
+            }
         }
-    }
-</script>
+    </script>
 </body>
+
 </html>
