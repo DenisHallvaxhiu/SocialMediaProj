@@ -1,5 +1,6 @@
 // DEPENDENCIES
 const express = require('express')
+const morgan = require('morgan');
 const bcrypt = require('bcrypt')
 const app = express()
 const port = process.env.PORT || 3000
@@ -19,6 +20,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded())
+app.use(morgan('dev'))
 
 // passport middlewares
 app.use(session({ secret: 'thisissecret' }))
