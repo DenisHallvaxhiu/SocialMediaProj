@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/login.css">
     <!-- <script src="database.js"></script> -->
-    <title>Document</title>
+    <title>Dog Media</title>
 </head>
 
 <body>
@@ -17,8 +17,8 @@
         <h1 style="text-align: center;">Newest social media in town</h1>
         <h3 style="text-align: center;">New to us?<a href="/register">Sign up for free!</a></h3>
         <form action="/loginUser" method="POST">
-            <input name="username" id="username" type="text" placeholder="Username" style="width: 350px;">
-            <input name="password" id="password" type="password" placeholder="Password(8+ characters)" style="width: 350px;">
+            <input name="username" id="username" type="text" placeholder="Username" style="width: 350px;" required>
+            <input name="password" id="password" type="password" placeholder="Password(8+ characters)" style="width: 350px;" required>
             <input id="login" type="submit" style="background-color:darkslategray;margin-top: 10px;border-radius: 20px;width: 350px"value="Log in">
         </form>
         <p><%= message %></p>
@@ -29,9 +29,7 @@
 
         <hr>
         <button style="background-color:whitesmoke;border-radius: 20px;width: 350px;">Log in with google</button>
-        <button style="background-color:rgb(25, 87, 87);border-radius: 20px;width: 350px;">Log in</button>
-        <a href="http://localhost:3000/profile"><button style="background-color:rgb(34, 146, 49);border-radius: 20px;width: 350px;">Check your profile</button></a>
-
+        <button style="background-color:rgb(34, 146, 49);border-radius: 20px;width: 350px;" onclick="location.href='/register'">Create an account</button>
     </div>
      
 </body>
