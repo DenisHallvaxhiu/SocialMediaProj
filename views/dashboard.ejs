@@ -14,7 +14,12 @@
         <a href="#" class="logo">Dog Media</a>
         <div class="navigation">
             <ul class="menu">
-                <li class="menu-item"><a href="#">Search Bar</a></li>
+                <li class="menu-item">
+                    <form class="search-container" method="GET" action="/search">
+                        <input class="search-input" type="text" name="keyword" placeholder="Search profile" />
+                        <button><i class="fa fa-search"></i></button>
+                    </form>
+                </li>
                 <li class="menu-item"><a href="/profile">Profile</a></li>
                 <li class="menu-item"><a href="/dashboard">Home</a></li>
                 <li class="menu-item"><a href="#">Message</a></li>
@@ -98,6 +103,7 @@
             </div>
             <% } %>
     </div>
+    <script src="https://use.fontawesome.com/9d09b39586.js"></script>
     <script>
         // disable the post button on render
         var postButton = document.getElementById('button-post-this');

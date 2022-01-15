@@ -73,6 +73,10 @@ app.get('/settings', middlewares.isAuthenticate, (req, res) => {
   return res.send('Settings page is under construction');
 })
 
+app.get('/search', (req, res) => {
+  return res.render('search');
+})
+
 // Endpoint to handle the creation of a user's post
 app.post('/createPost', middlewares.isAuthenticate, (req, res) => {
   // Extract the emotion, thoughts, and the username 
