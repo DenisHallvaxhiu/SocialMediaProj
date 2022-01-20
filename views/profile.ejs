@@ -35,7 +35,7 @@
 </html><div class="parent">
     <!-- Header class where we display profile and top picture -->
     <header id="header2" class="header">
-        <img id="profile_pic" src=<%=picture%> alt="">
+        <img id="profile_pic" src=<%=posts[0].picture%> alt="">
         <img id="top_pic" src="https://i.pinimg.com/originals/d5/32/85/d5328537c1da64a96c15d094bfc31f7a.jpg" alt="">
     </header>
     <!-- Main class where we show all the posts we have published -->
@@ -45,7 +45,7 @@
                 <div class="row">
                     <div class="profile-container col-2">
                         <div class="card-profile-img-container">
-                            <img src="<%=picture%>" width="100%" />
+                            <img src="<%=posts[i].picture%>" width="100%" />
                         </div>
                         <div style="text-align: center;">
                             <p>
@@ -62,7 +62,9 @@
                                     <%= posts[i]['date'] %> <small> by <%= posts[i]['username'] %></small>
                                 </small></p>
                         </div>
+                        <%if(button){%>
                         <button id="delete" ><a href=<%="/deletePost/" + posts[i]["ID"]%>>Delete</a></button>
+                        <%}%>
                     </div>
                 </div>
             </div>
@@ -76,8 +78,8 @@
     <!-- Description class where there will be a small bio of the profile -->
      <!-- Loop through the posts (array) variable that is coming from the request handler from index.js and generate the HTML posts with it's data -->
     <div class="description">
-    <h1><%=name%></h1>
-    <p ><%=description%></p>
+    <h1><%=posts[0].firstName + " " + posts[0].lastName%></h1>
+    <p ><%=posts[0].description%></p>
     </div>
 </div>
 </body>

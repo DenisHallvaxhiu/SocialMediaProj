@@ -38,67 +38,30 @@
 
     <div class="container">
         <div class="search-result-for-container">
-            <h3>Search results for: <i>some key word</i></h3>
-        </div>
-        <div class="search-profile-card">
-            <div class="search-profile-pic">
-                <img src="http://www.citydogshare.org/assets/default_dog-f1f5e5aa031ad0a956a936dc4fb4bde95c712f2ad1f99e883b5bc58d22aec668.jpg"
-                    width="100%" />
-            </div>
-            <div class="search-profile-content">
-                <div class="content-name">
-                    <a href="/profile/123">Jimmy Tran</a>
-                </div>
-                <div class="content-description">
-                    <p>Description: Hi I am Jims</p>
-                </div>
-            </div>
-            <div class="search-profile-view">
-                <a href="/profile/123" title="View profile">
-                    <i class="fa fa-eye fa-2x"></i>
-                </a>
-            </div>
+            <h3>Search results for: <i><%=keyword%></i></h3>
         </div>
 
-        <div class="search-profile-card">
-            <div class="search-profile-pic">
-                <img src="http://www.citydogshare.org/assets/default_dog-f1f5e5aa031ad0a956a936dc4fb4bde95c712f2ad1f99e883b5bc58d22aec668.jpg"
-                    width="100%" />
-            </div>
-            <div class="search-profile-content">
-                <div class="content-name">
-                    <a href="/profile/123">Testor Testing</a>
+         <% for (var i=0; i < users.length; i++) { %>
+            <div class="search-profile-card">
+                <div class="search-profile-pic">
+                    <img src="<%=users[i].picture%>"
+                        width="100%" />
                 </div>
-                <div class="content-description">
-                    <p>Description: Hi my name is Testor</p>
+                <div class="search-profile-content">
+                    <div class="content-name">
+                        <a href="/profile/<%=users[i].username%>"><%=`${users[i].firstName} ${users[i].lastName}`%></a>
+                    </div>
+                    <div class="content-description">
+                        <p><%=users[i].description%></p>
+                    </div>
                 </div>
-            </div>
-            <div class="search-profile-view">
-                <a href="/profile/123" title="View profile">
-                    <i class="fa fa-eye fa-2x"></i>
-                </a>
-            </div>
-        </div>
-
-        <div class="search-profile-card">
-            <div class="search-profile-pic">
-                <img src="http://www.citydogshare.org/assets/default_dog-f1f5e5aa031ad0a956a936dc4fb4bde95c712f2ad1f99e883b5bc58d22aec668.jpg"
-                    width="100%" />
-            </div>
-            <div class="search-profile-content">
-                <div class="content-name">
-                    <a href="/profile/123">Denis H</a>
-                </div>
-                <div class="content-description">
-                    <p>Description: Hi I am Denis</p>
+                <div class="search-profile-view">
+                    <a href="/profile/<%=users[i].username%>" title="View profile">
+                        <i class="fa fa-eye fa-2x"></i>
+                    </a>
                 </div>
             </div>
-            <div class="search-profile-view">
-                <a href="/profile/123" title="View profile">
-                    <i class="fa fa-eye fa-2x"></i>
-                </a>
-            </div>
-        </div>
+        <% } %>
 
     </div>
     <!-- REFERENCE FOR FONT AWESOME - https://fontawesome.com/v4.7/examples/ -->
