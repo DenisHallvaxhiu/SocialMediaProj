@@ -11,6 +11,7 @@ const passport = require('passport');
 const flash = require('connect-flash')
 const session = require('express-session');
 const { redirect } = require('express/lib/response');
+const { use } = require('passport');
 require('./passport')(passport); // pass passport for configuration
 
 
@@ -59,22 +60,49 @@ app.get('/profile', middlewares.isAuthenticate, (req, res) => {
 
   let username = req.session.passport.user;
   //SELECT p.*, u.firstName, u.lastName FROM Post p, User u WHERE p.username = 'Denis24' AND u.username = 'Denis24' ORDER BY ID DESC;
-  connection.query("SELECT * FROM Post  WHERE username = ?  ORDER BY ID DESC;", [username, username], (err, result) => {
+  connection.query("SELECT * FROM Post  WHERE username = ?  ORDER BY ID DESC;", [username], (err, result) => {
     if (err)
       res.render('profile', { posts: [], message: 'There was an error loading the posts' });
     else {
       const posts = result;
-      res.render('profile', { posts: posts, name: req.user.firstName + " " + req.user.lastName, description: req.user.description, picture: req.user.picture });
+      res.render('profile', { posts: posts, name: req.user.firstName + " " + req.user.lastName, description: req.user.description, picture: req.user.picture ,button:true});
     }
   })
 })
+
+
 
 app.get('/settings', middlewares.isAuthenticate, (req, res) => {
   return res.send('Settings page is under construction');
 })
 
 app.get('/search', (req, res) => {
-  return res.render('search');
+  let keyword = req.query.keyword;
+
+  connection.query("Select username,firstName,lastName,picture,description from user where firstName LIKE ? or lastName Like ? or username like ? ",[`%${keyword}%`,`%${keyword}%`,`%${keyword}%`],(err,result)=>{
+      if(err){
+        console.log(err)
+      }
+      else{
+        const users=result;
+        console.log(users)
+        res.render('search',{users:users,keyword:keyword})
+      }
+  })
+})
+
+app.get(`/profile/:username`,(req,res)=>{
+  let user = req.params.username;
+  connection.query("SELECT * FROM Post  WHERE username = ?  ORDER BY ID DESC;", [user], (err, posts) => {
+    if (err)
+      res.render('profile', { posts: [], message: 'There was an error loading the posts' });
+    else {
+      console.log(posts)
+      // const posts = result;
+      res.render('profile', { posts: posts, name: "req.user.firstName" + " " + "req.user.lastName", description: "req.user.description", picture: "req.user.picture",button:false });
+     
+    }
+  })
 })
 
 // Endpoint to handle the creation of a user's post
@@ -98,6 +126,7 @@ app.post('/createPost', middlewares.isAuthenticate, (req, res) => {
 
 })
 
+
 app.get('/deletePost/:postId', middlewares.isAuthenticate, function (req, res) {
   connection.query("delete from post where id =" + req.params.postId, (err, result) => {
     if (err) {
@@ -108,6 +137,8 @@ app.get('/deletePost/:postId', middlewares.isAuthenticate, function (req, res) {
     }
   })
 })
+
+
 
 app.post('/registerUser', async (req, res) => {
   let userName = req.body.userName

@@ -62,7 +62,9 @@
                                     <%= posts[i]['date'] %> <small> by <%= posts[i]['username'] %></small>
                                 </small></p>
                         </div>
+                        <%if(button){%>
                         <button id="delete" ><a href=<%="/deletePost/" + posts[i]["ID"]%>>Delete</a></button>
+                        <%}%>
                     </div>
                 </div>
             </div>
