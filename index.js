@@ -93,13 +93,13 @@ app.get('/search', (req, res) => {
 
 app.get(`/profile/:username`,(req,res)=>{
   let user = req.params.username;
-  connection.query("SELECT * FROM Post  WHERE username = ?  ORDER BY ID DESC;", [user], (err, posts) => {
+  connection.query("SELECT p.* , u.* FROM Post p, User u  WHERE p.username = ? AND u.username=? ORDER BY ID DESC;", [user,user], (err, result) => {
     if (err)
       res.render('profile', { posts: [], message: 'There was an error loading the posts' });
     else {
-      console.log(posts)
-      // const posts = result;
-      res.render('profile', { posts: posts, name: "req.user.firstName" + " " + "req.user.lastName", description: "req.user.description", picture: "req.user.picture",button:false });
+      console.log(result)
+      const posts = result;
+      res.render('profile', { posts: posts, name: posts[0].firstName + " " + posts[0].lastName, description: posts[0].description, picture: posts[0].picture,button:false });
      
     }
   })
