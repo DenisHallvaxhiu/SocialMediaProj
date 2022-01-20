@@ -60,12 +60,12 @@ app.get('/profile', middlewares.isAuthenticate, (req, res) => {
 
   let username = req.session.passport.user;
   //SELECT p.*, u.firstName, u.lastName FROM Post p, User u WHERE p.username = 'Denis24' AND u.username = 'Denis24' ORDER BY ID DESC;
-  connection.query("SELECT * FROM Post  WHERE username = ?  ORDER BY ID DESC;", [username], (err, result) => {
+  connection.query("SELECT p.* , u.* FROM Post p, User u  WHERE p.username = ? AND u.username=? ORDER BY ID DESC;", [username,username], (err, result) => {
     if (err)
       res.render('profile', { posts: [], message: 'There was an error loading the posts' });
     else {
       const posts = result;
-      res.render('profile', { posts: posts, name: req.user.firstName + " " + req.user.lastName, description: req.user.description, picture: req.user.picture ,button:true});
+      res.render('profile', { posts: posts,button:true});
     }
   })
 })
@@ -99,7 +99,7 @@ app.get(`/profile/:username`,(req,res)=>{
     else {
       console.log(result)
       const posts = result;
-      res.render('profile', { posts: posts, name: posts[0].firstName + " " + posts[0].lastName, description: posts[0].description, picture: posts[0].picture,button:false });
+      res.render('profile', { posts: posts,button:false });
      
     }
   })
