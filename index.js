@@ -60,7 +60,7 @@ app.get('/profile', middlewares.isAuthenticate, (req, res) => {
 
   let username = req.session.passport.user;
   //SELECT p.*, u.firstName, u.lastName FROM Post p, User u WHERE p.username = 'Denis24' AND u.username = 'Denis24' ORDER BY ID DESC;
-  connection.query("SELECT p.* , u.* FROM Post p, User u  WHERE p.username = ? AND u.username=? ORDER BY ID DESC;", [username,username], (err, result) => {
+  connection.query("SELECT * FROM User LEFT JOIN post ON User.username = Post.username WHERE User.username = ? ORDER BY ID DESC;", [username], (err, result) => {
     if (err)
       res.render('profile', { posts: [], message: 'There was an error loading the posts' });
     else {
@@ -93,7 +93,7 @@ app.get('/search', (req, res) => {
 
 app.get(`/profile/:username`,(req,res)=>{
   let user = req.params.username;
-  connection.query("SELECT p.* , u.* FROM Post p, User u  WHERE p.username = ? AND u.username=? ORDER BY ID DESC;", [user,user], (err, result) => {
+  connection.query("SELECT * FROM User LEFT JOIN post ON User.username = Post.username WHERE User.username = ? ORDER BY ID DESC;", [user], (err, result) => {
     if (err)
       res.render('profile', { posts: [], message: 'There was an error loading the posts' });
     else {
