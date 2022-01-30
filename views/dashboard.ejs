@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/navbar.css">
     <title>Dashboard</title>
 </head>
 
@@ -24,7 +25,7 @@
                 <li class="menu-item"><a href="/dashboard">Home</a></li>
                 <li class="menu-item"><a href="#">Message</a></li>
                 <li class="menu-item">
-                    <a class="sub-btn" href="#">More<i class="fas fa-angle-down"></i> </a>
+                    <a class="sub-btn" href="#">More<i class="fa fa-angle-down"></i> </a>
                     <ul class="sub-menu">
                         <li class="sub-item"><a href="#">Account</a></li>
                         <li class="sub-item"><a href="#">Settings</a></li>
@@ -92,11 +93,16 @@
                             <%= posts[i]['thought'] %>
                         </div>
                         <div class="card-info-info">
-                            <p class="card-date-tag"><small class="text-muted">
-                                    <i>
-                                        <%= posts[i]['date'] %>
-                                    </i> <small> by <%= posts[i]['username'] %></small>
-                                </small></p>
+                            <p class="card-date-tag">
+                                <small class="text-muted">
+                                    <%= posts[i]['date'] %>
+                                        <small> by
+                                            <a href="/profile/<%= posts[i]['username'] %>">
+                                                <%= posts[i]['username'] %>
+                                            </a>
+                                        </small>
+                                </small>
+                            </p>
                         </div>
                     </div>
                 </div>

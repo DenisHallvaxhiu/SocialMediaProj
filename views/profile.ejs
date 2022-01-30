@@ -39,35 +39,42 @@
         <img id="top_pic" src="https://i.pinimg.com/originals/d5/32/85/d5328537c1da64a96c15d094bfc31f7a.jpg" alt="">
     </header>
     <!-- Main class where we show all the posts we have published -->
-    <main class="main_content">
-        <% for (var i=0; i < posts.length; i++) { %>
-            <div class="card">
-                <div class="row">
-                    <div class="profile-container col-2">
-                        <div class="card-profile-img-container">
-                            <img src="<%=posts[i].picture%>" width="100%" />
+       <main class="main_content">
+        <!-- If the ID of a post is NULL that means that the user has no posts -->
+        <% if (posts[0].ID !== null) { %>
+            <% for (var i=0; i < posts.length; i++) { %>
+                <div class="card">
+                    <div class="row">
+                        <div class="profile-container col-2">
+                            <div class="card-profile-img-container">
+                                <img src="<%=posts[i].picture%>" width="100%" />
+                            </div>
+                            <div style="text-align: center;">
+                                <p>
+                                    Mood: &#<%= posts[i]['mood'] %>
+                                </p>
+                            </div>
                         </div>
-                        <div style="text-align: center;">
-                            <p>
-                                Mood: &#<%= posts[i]['mood'] %>
-                            </p>
+                        <div class="posts-content col-10">
+                            <div class="card-body">
+                                <%= posts[i]['thought'] %>
+                            </div>
+                            <div class="card-info-info">
+                                <p class="card-date-tag"><small class="text-muted">
+                                        <%= posts[i]['date'] %> <small> by <%= posts[i]['username'] %></small>
+                                    </small></p>
+                            </div>
+                            <%if(button){%>
+                            <button id="delete" ><a href=<%="/deletePost/" + posts[i]["ID"]%>>Delete</a></button>
+                            <%}%>
                         </div>
-                    </div>
-                    <div class="posts-content col-10">
-                        <div class="card-body">
-                            <%= posts[i]['thought'] %>
-                        </div>
-                        <div class="card-info-info">
-                            <p class="card-date-tag"><small class="text-muted">
-                                    <%= posts[i]['date'] %> <small> by <%= posts[i]['username'] %></small>
-                                </small></p>
-                        </div>
-                        <%if(button){%>
-                        <button id="delete" ><a href=<%="/deletePost/" + posts[i]["ID"]%>>Delete</a></button>
-                        <%}%>
                     </div>
                 </div>
-            </div>
+                <% } %>
+            <% } else  { %>
+                <div class="card">
+                    <p>There are no posts...</p>
+                </div>
             <% } %>
 
             <% if (locals.message) { %> 
