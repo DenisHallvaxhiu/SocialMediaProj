@@ -138,6 +138,10 @@ app.get('/deletePost/:postId', middlewares.isAuthenticate, function (req, res) {
   })
 })
 
+app.get('/messageUser/:roomId', function (req,res) {
+  return res.render('message-user');
+})
+
 
 
 app.post('/registerUser', async (req, res) => {
