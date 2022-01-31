@@ -65,7 +65,7 @@ app.get('/profile', middlewares.isAuthenticate, (req, res) => {
       res.render('profile', { posts: [], message: 'There was an error loading the posts' });
     else {
       const posts = result;
-      res.render('profile', { posts: posts,button:true});
+      res.render('profile', { posts: posts, button: true });
     }
   })
 })
@@ -79,19 +79,19 @@ app.get('/settings', middlewares.isAuthenticate, (req, res) => {
 app.get('/search', (req, res) => {
   let keyword = req.query.keyword;
 
-  connection.query("Select username,firstName,lastName,picture,description from user where firstName LIKE ? or lastName Like ? or username like ? ",[`%${keyword}%`,`%${keyword}%`,`%${keyword}%`],(err,result)=>{
-      if(err){
-        console.log(err)
-      }
-      else{
-        const users=result;
-        console.log(users)
-        res.render('search',{users:users,keyword:keyword})
-      }
+  connection.query("Select username,firstName,lastName,picture,description from user where firstName LIKE ? or lastName Like ? or username like ? ", [`%${keyword}%`, `%${keyword}%`, `%${keyword}%`], (err, result) => {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      const users = result;
+      console.log(users)
+      res.render('search', { users: users, keyword: keyword })
+    }
   })
 })
 
-app.get(`/profile/:username`,(req,res)=>{
+app.get(`/profile/:username`, (req, res) => {
   let user = req.params.username;
   connection.query("SELECT * FROM User LEFT JOIN post ON User.username = Post.username WHERE User.username = ? ORDER BY ID DESC;", [user], (err, result) => {
     if (err)
@@ -99,8 +99,8 @@ app.get(`/profile/:username`,(req,res)=>{
     else {
       console.log(result)
       const posts = result;
-      res.render('profile', { posts: posts,button:false });
-     
+      res.render('profile', { posts: posts, button: false });
+
     }
   })
 })
@@ -138,8 +138,38 @@ app.get('/deletePost/:postId', middlewares.isAuthenticate, function (req, res) {
   })
 })
 
-app.get('/messageUser/:roomId', function (req,res) {
-  return res.render('message-user');
+app.get('/messageUser/:roomId', function (req, res) {
+  // NEED TO DO: Check if there is a room under that ID, if not create one, otherwise retrieve messages
+
+  // RETRIEVE MESSAGES : TESTING using hard coded data
+  var messages = [
+    {
+      id: 1,
+      roomId: 'denis24-jtran',
+      fromUserId: 'jtran',
+      toUserId: 'denis24',
+      message: 'Hey What is up man!!!!',
+      createdOn: '2022-01-30 18:51:31' // NEED to write function to convert to correct timezone
+    },
+    {
+      id: 2,
+      roomId: 'denis24-jtran',
+      fromUserId: 'denis24',
+      toUserId: 'jtran',
+      message: 'Chilling how about you?',
+      createdOn: '2022-01-30 18:45:31'
+    },
+    {
+      id: 3,
+      roomId: 'denis24-jtran',
+      fromUserId: 'jtran',
+      toUserId: 'denis24',
+      message: 'Nice bro same! :)',
+      createdOn: '2022-01-30 18:59:31'
+    }
+  ];
+
+  return res.render('message-user', { messages: messages });
 })
 
 

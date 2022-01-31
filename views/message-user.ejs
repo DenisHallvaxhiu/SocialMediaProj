@@ -5,108 +5,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/message-user.css">
     <title>Chat</title>
-    <style>
-        #form {
-            background: rgba(0, 0, 0, 0.15);
-            padding: 0.25rem;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            height: 3rem;
-            box-sizing: border-box;
-            backdrop-filter: blur(10px);
-        }
-
-        #input {
-            border: none;
-            padding: 0 1rem;
-            flex-grow: 1;
-            border-radius: 2rem;
-            margin: 0.25rem;
-        }
-
-        #input:focus {
-            outline: none;
-        }
-
-        #form>button {
-            background: #333;
-            border: none;
-            padding: 0 1rem;
-            margin: 0.25rem;
-            border-radius: 3px;
-            outline: none;
-            color: #fff;
-        }
-
-        #messages>li {
-            padding: 0.5rem 1rem;
-        }
-
-        .message-item {
-            margin: 5px 0px;
-            width: 50%;
-            border-radius: 10px;
-            padding: 10px;
-        }
-
-        .message-item-sender {
-            float: left;
-            background-color: rgb(64, 119, 182);
-        }
-
-         .message-item-reciever {
-            float: right;
-            background-color: rgb(181 195 211);
-        }
-
-        .message-user-header {
-            text-align: center;
-            padding: 20px 0px;  
-            background-color: #9f9f9f;
-        }
-    </style>
 </head>
 
 <body>
-    <div class="message-container"> 
+    <div class="message-container">
         <div class="message-user-header">
-            Some User 
+            <p>Some User</p>
         </div>
-        <div id="messages">
-            <div class="message-item message-item-sender">
-                <div style=""></div>
-                <p>This is the message This is the message This is the messageThis is the message This is the message
-                    This is the message This is the messageThis is the message</p>
-            </div>
-            <div class="message-item message-item-sender">
-                <p>This is the message This is the message This is the messageThis is the message This is the message
-                    This is the message This is the messageThis is the message</p>
-            </div>
-            <div class="message-item message-item-reciever">
-                <p>This is the message This is the message This is the messageThis is the message This is the message
-                    This is the message This is the messageThis is the message</p>
-            </div>
-            <div class="message-item message-item-sender">
-                <p>This is the message This is the message This is the messageThis is the message This is the message
-                    This is the message This is the messageThis is the message</p>
-            </div>
-            <div class="message-item message-item-sender">
-                <p>This is the message This is the message This is the messageThis is the message This is the message
-                    This is the message This is the messageThis is the message</p>
-            </div>
-            <div class="message-item message-item-sender">
-                <p>This is the message This is the message This is the messageThis is the message This is the message
-                    This is the message This is the messageThis is the message</p>
-            </div>
+        <div class="messages" id="messages">
+            <% for (var i = 0; i < messages.length; i++) { %>
+                <div class="message-item message-item-<%= (messages[i].fromUserId === 'jtran') ? 'sender' : 'reciever' %>">
+                    <div class="message-item-content">
+                        <p><%= messages[i].message %></p>
+                        <small>
+                            Sent at <i><%= messages[i].createdOn %></i>
+                        </small>
+                    </div>
+                </div> 
+            <% } %>
         </div>
+        <form id="form" action="">
+            <input id="input" autocomplete="off" /><button>Send</button>
+        </form>
     </div>
-    <form id="form" action="">
-        <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
     <!-- <script src="/socket.io/socket.io.js"></script> -->
 
     <script>
@@ -120,14 +43,34 @@
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             if (input.value) {
-                var item = document.createElement('div');
-                var message = document.createElement('p');
-                item.className = "message-item message-item-sender";
-                message.textContent = input.value;
-                item.appendChild(message);
-                messages.appendChild(item);
+                // Create the elements for the message
+                var messageItem = document.createElement('div');
+                var messageItemContent = document.createElement('div');
+                var p = document.createElement('p');
+                var s = document.createElement('small');
+                var i = document.createElement('i');
+
+                // Set text content's for elements
+                p.textContent = input.value;
+                s.textContent = 'Sent at ';
+                i.textContent = '10:23PM';
+
+                messageItem.className = "message-item message-item-sender";
+                messageItemContent.className = "message-item-content";
+
+                // Bind those elemnts together
+                s.appendChild(i);
+                messageItemContent.appendChild(p);
+                messageItemContent.appendChild(s);
+                messageItem.appendChild(messageItemContent);
+
+                // Add the messageItem element to the messages element
+                messages.appendChild(messageItem);
+
                 // Sends message to server
                 // socket.emit('chat message', input.value);
+
+                // Clear the input field
                 input.value = '';
                 console.log('after appending', messages.children)
             }
