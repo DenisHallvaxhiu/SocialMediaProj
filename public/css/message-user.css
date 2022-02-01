@@ -1,0 +1,93 @@
+/* MESSAGE USER STYLING */
+@import './constants.css';
+
+#form {
+    background: var(--main-blue);
+    padding: 0.25rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    height: 3rem;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px);
+}
+
+#input {
+    border: none;
+    padding: 0 1rem;
+    flex-grow: 1;
+    border-radius: 2rem;
+    margin: 0.25rem;
+}
+
+#input:focus {
+    outline: none;
+}
+
+#form>button {
+    background: #ebebeb;
+    border: none;
+    padding: 0 1rem;
+    margin: 0.25rem;
+    border-radius: 3px;
+    outline: none;
+    color: black;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
+}
+
+.message-item {
+    margin: 5px 0px;
+    width: 50%;
+    border-radius: 10px;
+    word-break: break-word;
+    flex: 1;
+}
+
+.message-item-sender {
+    margin-right: auto;
+    background-color: rgb(164 179 195);
+}
+
+.message-item-reciever {
+    margin-left: auto;
+    background-color: #ebebeb;
+}
+
+.message-user-header {
+    text-align: center;
+    padding: 20px 0px;
+    background-color: var(--main-blue);
+}
+
+.message-item > .message-item-content > p {
+    padding: 0px 10px;
+}
+
+.message-item > .message-item-content > small {
+    padding: 10px;
+}
+
+.message-item-content {
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 569px) {
+    .message-item-sender {
+        float: none;
+    }
+
+    .message-item-reciever {
+        float: none;
+    }
+
+    .message-item {
+        width: 100%;
+    }
+}
