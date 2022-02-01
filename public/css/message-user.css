@@ -1,7 +1,8 @@
 /* MESSAGE USER STYLING */
+@import './constants.css';
 
 #form {
-    background: rgba(0, 0, 0, 0.15);
+    background: var(--main-blue);
     padding: 0.25rem;
     position: fixed;
     bottom: 0;
@@ -26,13 +27,13 @@
 }
 
 #form>button {
-    background: #333;
+    background: #ebebeb;
     border: none;
     padding: 0 1rem;
     margin: 0.25rem;
     border-radius: 3px;
     outline: none;
-    color: #fff;
+    color: black;
 }
 
 .messages {
@@ -50,18 +51,18 @@
 
 .message-item-sender {
     margin-right: auto;
-    background-color: rgb(64, 119, 182);
+    background-color: rgb(164 179 195);
 }
 
 .message-item-reciever {
     margin-left: auto;
-    background-color: rgb(181 195 211);
+    background-color: #ebebeb;
 }
 
 .message-user-header {
     text-align: center;
     padding: 20px 0px;
-    background-color: rgba(0, 0, 0, 0.15);
+    background-color: var(--main-blue);
 }
 
 .message-item > .message-item-content > p {

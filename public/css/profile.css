@@ -1,3 +1,5 @@
+@import './constants.css';
+
 body{
     background: linear-gradient(to right,rgb(191, 228, 226),rgb(19, 166, 192));
     height: 200px;
@@ -13,7 +15,7 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background:rgb(64, 119, 182);
+    background: var(--main-blue);
     box-shadow: 0 5px 25px rgb(0 0 0/20%);
     transition: 0.6s;
     margin: auto;
@@ -58,7 +60,7 @@ body{
 
 .menu-item .sub-menu{
     position: absolute;
-    background: rgb(64, 119, 182);
+    background: var(--main-blue);
     top: 74px;
     line-height: 40px;
     list-style: none;
@@ -160,7 +162,7 @@ body{
 } 
 
 .button-post-this {
-    background-color:#f7f7f7;
+    background-color: var(--main-grey);
     border-radius: 10px;
     border: none;
     padding: 12px;
@@ -201,7 +203,7 @@ body{
 .card {
     margin: 10px 0px;
     border-radius: 10px;
-    background-color: #f7f7f7;
+    background-color: var(--main-grey);
     padding: 12px;
 }
 

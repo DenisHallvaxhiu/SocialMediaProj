@@ -1,0 +1,6 @@
+/* REUSABLE CONSTANTS -- https://stackoverflow.com/questions/62553766/how-to-import-css-root-constant-from-another-css-file */
+
+:root {
+    --main-blue: rgb(64, 119, 182);
+    --main-grey: #f7f7f7;
+}
