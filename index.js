@@ -56,6 +56,10 @@ app.get('/dashboard', middlewares.isAuthenticate, (req, res) => {
   })
 })
 
+app.get('/conversation',middlewares.isAuthenticate,(req,res)=>{
+    res.render('conversation')
+})
+
 app.get('/profile', middlewares.isAuthenticate, (req, res) => {
 
   let username = req.session.passport.user;
