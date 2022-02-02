@@ -16,7 +16,7 @@
         </div>
         <div class="messages" id="messages">
             <% for (var i = 0; i < messages.length; i++) { %>
-                <div class="message-item message-item-<%= (messages[i].fromUserId === 'jtran') ? 'sender' : 'reciever' %>">
+                <div class="message-item message-item-<%= (messages[i].fromUserId === user) ? 'sender' : 'reciever' %>">
                     <div class="message-item-content">
                         <p><%= messages[i].message %></p>
                         <small>

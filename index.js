@@ -138,38 +138,41 @@ app.get('/deletePost/:postId', middlewares.isAuthenticate, function (req, res) {
   })
 })
 
-app.get('/messageUser/:roomId', function (req, res) {
+app.get('/messageUser/:roomId', middlewares.isAuthenticate, function (req, res) {
   // NEED TO DO: Check if there is a room under that ID, if not create one, otherwise retrieve messages
+  
 
-  // RETRIEVE MESSAGES : TESTING using hard coded data
-  var messages = [
-    {
-      id: 1,
-      roomId: 'denis24-jtran',
-      fromUserId: 'jtran',
-      toUserId: 'denis24',
-      message: 'Hey What is up man!!!!',
-      createdOn: '2022-01-30 18:51:31' // NEED to write function to convert to correct timezone
-    },
-    {
-      id: 2,
-      roomId: 'denis24-jtran',
-      fromUserId: 'denis24',
-      toUserId: 'jtran',
-      message: 'Chilling how about you?',
-      createdOn: '2022-01-30 18:45:31'
-    },
-    {
-      id: 3,
-      roomId: 'denis24-jtran',
-      fromUserId: 'jtran',
-      toUserId: 'denis24',
-      message: 'Nice bro same! :)',
-      createdOn: '2022-01-30 18:59:31'
+  var roomID = req.params.roomId;
+  var user = req.session.passport.user;
+  
+  // NEED TO IMPROVE
+  if (!(roomID.includes(user))) {
+    req.logOut();   
+    return res.redirect('/');
+  }
+
+  connection.query("SELECT * FROM rooms WHERE id = ?", [roomID], (err, result) => {
+    if (err) console.log(err);
+    else {
+      console.log(result);
+      // If room not exists, add it to db
+      if (result.length === 0) {
+        connection.query("INSERT INTO rooms(id) VALUES(?);", [roomID], (err, result) => {
+          if (err) console.log(err);
+        })
+        return res.render('message-user', { messages: [], user: user });
+      } 
+      // otherwise retrieve messsages from room
+      else {
+        connection.query("SELECT * FROM messages WHERE roomId = ?", [roomID], (err, messages) => {
+          if (err) console.log(err);
+          else {
+            return res.render('message-user', { messages: messages, user: user });
+          }
+        })
+      }
     }
-  ];
-
-  return res.render('message-user', { messages: messages });
+  });
 })
 
 
