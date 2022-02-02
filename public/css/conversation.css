@@ -1,0 +1,74 @@
+/*  SEARCH STYLING  */
+.container {
+    max-width: 1170px;
+    margin: 0 auto;
+    padding: 0px 40px;
+    padding-top: 10em;
+}
+
+.header3 {
+    text-align: center;
+    padding: 30px;
+}
+
+.search-profile-card {
+    display: flex;
+    margin: 10px 0px;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+    padding: 12px;
+}
+
+.search-profile-pic {
+    text-align: center;
+    flex: 1;
+}
+
+.search-profile-pic img {
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+}
+
+.search-profile-content {
+    flex: 5;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0px;
+    margin-left: 35px;
+}
+
+.search-profile-content .content-name {
+    flex: 1;
+}
+
+.content-name > a {
+    text-decoration: none;
+    color: black;
+}
+
+.content-name > a:hover {
+    text-decoration: underline;
+}
+
+.search-profile-content .content-lastMsg {
+    font-size: 12px;
+    flex: 1;
+}
+
+.search-profile-view {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-profile-view a {
+    color: rgb(64, 119, 182);
+}
+
+@media screen and (max-width: 569px) {
+    .search-profile-pic {
+        display: none;
+    }
+}
