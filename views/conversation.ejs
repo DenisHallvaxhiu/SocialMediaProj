@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/conversation.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <title>conversation</title>
+</head>
+
+<body>
+    <header>
+        <a href="#" class="logo">Dog Media</a>
+        <div class="navigation">
+            <ul class="menu">
+                <li class="menu-item">
+                    <form class="search-container" method="GET" action="/search">
+                        <input class="search-input" type="text" name="keyword" placeholder="Search profile" />
+                        <button><i class="fa fa-search"></i></button>
+                    </form>
+                </li>
+                <li class="menu-item"><a href="/profile">Profile</a></li>
+                <li class="menu-item"><a href="/dashboard">Home</a></li>
+                <li class="menu-item"><a href="#">Message</a></li>
+                <li class="menu-item">
+                    <a class="sub-btn" href="#">More<i class="fa fa-angle-down"></i> </a>
+                    <ul class="sub-menu">
+                        <li class="sub-item"><a href="#">Account</a></li>
+                        <li class="sub-item"><a href="#">Settings</a></li>
+                        <li class="sub-item"><a href="#">Help</a></li>
+                        <li class="sub-item"><a href="/logOut">Log Out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <div class = "container">
+        <div class= "header3">
+            <!-- from search smth to header 3 -->
+            <h3>Your latest messages!</h3>
+        </div>
+
+        <% for (var i=0; i < 3; i++) { %>
+            <div class="search-profile-card">
+                <div class="search-profile-pic">
+                    <img src="https://images.unsplash.com/photo-1611003228941-98852ba62227?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmFieSUyMGRvZ3xlbnwwfHwwfHw%3D&w=1000&q=80"
+                        width="100%">
+                </div>
+                <div class="search-profile-content">
+                    <div class="content-name">
+                        <a href="/conversation>">Denis Hallvaxhiu</a>
+                    </div>
+                    <div class="content-lastMsg">
+                        <!-- description to lastMsg -->
+                        <p>Hello</p>
+                    </div>
+                </div>
+                <div class="search-profile-view">
+                    <a href="/conversation" title="View profile">
+                        <i class="fas fa-sms fa-2x"></i>
+                    </a>
+                </div>
+            </div>
+        <% } %>
+
+    </div>
+
+    <!-- <div class="container">
+
+
+    </div> -->
+    <!-- REFERENCE FOR FONT AWESOME - https://fontawesome.com/v4.7/examples/ -->
+    <script src="https://kit.fontawesome.com/8b0b50ef47.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
