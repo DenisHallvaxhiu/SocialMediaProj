@@ -16,7 +16,7 @@
         </div>
         <div class="messages" id="messages">
             <% for (var i = 0; i < messages.length; i++) { %>
-                <div class="message-item message-item-<%= (messages[i].fromUserId === user) ? 'sender' : 'reciever' %>">
+                <div class="message-item message-item-<%= (messages[i].fromUserId === user) ? 'reciever' : 'sender' %>">
                     <div class="message-item-content">
                         <p><%= messages[i].message %></p>
                         <small>
@@ -26,8 +26,9 @@
                 </div> 
             <% } %>
         </div>
-        <form id="form" action="">
-            <input id="input" autocomplete="off" /><button>Send</button>
+        <form  action="/sendMessage/Denis24-jtran" method="post">
+            <input name="input" id="input" autocomplete="off" />
+            <button id="sendButton" type="submit">Send</button>
         </form>
     </div>
     <!-- <script src="/socket.io/socket.io.js"></script> -->
@@ -35,46 +36,46 @@
     <script>
         // var socket = io();
 
-        var messages = document.getElementById('messages');
-        console.log(messages.children);
-        var form = document.getElementById('form');
-        var input = document.getElementById('input');
+        // var messages = document.getElementById('messages');
+        // console.log(messages.children);
+        // var form = document.getElementById('form');
+        // var input = document.getElementById('input');
 
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            if (input.value) {
-                // Create the elements for the message
-                var messageItem = document.createElement('div');
-                var messageItemContent = document.createElement('div');
-                var p = document.createElement('p');
-                var s = document.createElement('small');
-                var i = document.createElement('i');
+        // form.addEventListener('submit', function (e) {
+        //     e.preventDefault();
+        //     if (input.value) {
+        //         // Create the elements for the message
+        //         var messageItem = document.createElement('div');
+        //         var messageItemContent = document.createElement('div');
+        //         var p = document.createElement('p');
+        //         var s = document.createElement('small');
+        //         var i = document.createElement('i');
 
-                // Set text content's for elements
-                p.textContent = input.value;
-                s.textContent = 'Sent at ';
-                i.textContent = '10:23PM';
+        //         // Set text content's for elements
+        //         p.textContent = input.value;
+        //         s.textContent = 'Sent at ';
+        //         i.textContent = '10:23PM';
 
-                messageItem.className = "message-item message-item-sender";
-                messageItemContent.className = "message-item-content";
+        //         messageItem.className = "message-item message-item-sender";
+        //         messageItemContent.className = "message-item-content";
 
-                // Bind those elemnts together
-                s.appendChild(i);
-                messageItemContent.appendChild(p);
-                messageItemContent.appendChild(s);
-                messageItem.appendChild(messageItemContent);
+        //         // Bind those elemnts together
+        //         s.appendChild(i);
+        //         messageItemContent.appendChild(p);
+        //         messageItemContent.appendChild(s);
+        //         messageItem.appendChild(messageItemContent);
 
-                // Add the messageItem element to the messages element
-                messages.appendChild(messageItem);
+        //         // Add the messageItem element to the messages element
+        //         messages.appendChild(messageItem);
 
-                // Sends message to server
-                // socket.emit('chat message', input.value);
+        //         // Sends message to server
+        //         // socket.emit('chat message', input.value);
 
-                // Clear the input field
-                input.value = '';
-                console.log('after appending', messages.children)
-            }
-        });
+        //         // Clear the input field
+        //         input.value = '';
+        //         console.log('after appending', messages.children)
+        //     }
+        // });
 
         // Recieve from the server
         // socket.on('chat message', function (msg) {

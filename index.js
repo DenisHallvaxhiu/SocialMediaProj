@@ -74,8 +74,6 @@ app.get('/profile', middlewares.isAuthenticate, (req, res) => {
   })
 })
 
-
-
 app.get('/settings', middlewares.isAuthenticate, (req, res) => {
   return res.send('Settings page is under construction');
 })
@@ -118,7 +116,6 @@ app.post('/createPost', middlewares.isAuthenticate, (req, res) => {
   let today = new Date();
   let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   let user = req.session.passport.user;
-
   connection.query("INSERT INTO post (`mood`, `date`, `username`, `thought`) VALUES (?,?,?,?)", [emotion, date, user, thought], (err, result) => {
     if (err) {
       console.log(err)
@@ -148,12 +145,14 @@ app.get('/messageUser/:roomId', middlewares.isAuthenticate, function (req, res) 
 
   var roomID = req.params.roomId;
   var user = req.session.passport.user;
-  
+  console.log(user)
   // NEED TO IMPROVE
-  if (!(roomID.includes(user))) {
-    req.logOut();   
-    return res.redirect('/');
-  }
+  // if (!(roomID.includes(user))) {
+  //   console.log(user)
+  //   console.log(roomID)
+  //   req.logOut();   
+  //   return res.redirect('/');
+  // }
 
   connection.query("SELECT * FROM rooms WHERE id = ?", [roomID], (err, result) => {
     if (err) console.log(err);
@@ -179,6 +178,21 @@ app.get('/messageUser/:roomId', middlewares.isAuthenticate, function (req, res) 
   });
 })
 
+app.post('/sendMessage/:roomId',middlewares.isAuthenticate,(req,res)=>{
+  let message = req.body.input;
+  let roomId = req.params.roomId;
+  console.log(message)
+  if(message){
+  connection.query("Insert into messages (roomId,fromUserId,toUserId,message) Values (?,?,?,?)",[roomId,"Denis24","jtran",message],(err,result)=>{
+    if(err){
+      console.log(err)
+    }else{
+      console.log("test")
+      res.redirect("/messageuser/denis24-jtran")
+    }
+  })
+}
+})
 
 
 app.post('/registerUser', async (req, res) => {
