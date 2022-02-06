@@ -36,6 +36,9 @@
     <!-- Header class where we display profile and top picture -->
     <header id="header2" class="header">
         <img id="profile_pic" src=<%=posts[0].picture%> alt="">
+        <%if(msg){%>
+            <button id="message" ><a href=<%="/messageUser/" + room%>>Message</a></button>
+            <%}%>
         <img id="top_pic" src="https://i.pinimg.com/originals/d5/32/85/d5328537c1da64a96c15d094bfc31f7a.jpg" alt="">
     </header>
     <!-- Main class where we show all the posts we have published -->

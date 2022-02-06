@@ -16,7 +16,7 @@
         </div>
         <div class="messages" id="messages">
             <% for (var i = 0; i < messages.length; i++) { %>
-                <div class="message-item message-item-<%= (messages[i].fromUserId === user) ? 'reciever' : 'sender' %>">
+                <div class="message-item message-item-<%= (messages[i].fromUserId.toLowerCase() === user.toLowerCase()) ? 'reciever' : 'sender' %>">
                     <div class="message-item-content">
                         <p><%= messages[i].message %></p>
                         <small>
@@ -26,64 +26,68 @@
                 </div> 
             <% } %>
         </div>
-        <form  action="/sendMessage/Denis24-jtran" method="post">
+        <form  action="/sendMessage/Denis24-jtran" method="post" id= "form">
             <input name="input" id="input" autocomplete="off" />
             <button id="sendButton" type="submit">Send</button>
         </form>
     </div>
-    <!-- <script src="/socket.io/socket.io.js"></script> -->
+    <script src="/socket.io/socket.io.js"></script>
 
     <script>
-        // var socket = io();
+        var socket = io();
+        
+        var messages = document.getElementById('messages');
+        var form = document.getElementById('form');
+        var input = document.getElementById('input');
+        var user = "<%= user %>"
+        var reciever = "<%= receiver %>"
+        var room = "<%= room %>"
 
-        // var messages = document.getElementById('messages');
-        // console.log(messages.children);
-        // var form = document.getElementById('form');
-        // var input = document.getElementById('input');
+        socket.emit("join",room)
 
-        // form.addEventListener('submit', function (e) {
-        //     e.preventDefault();
-        //     if (input.value) {
-        //         // Create the elements for the message
-        //         var messageItem = document.createElement('div');
-        //         var messageItemContent = document.createElement('div');
-        //         var p = document.createElement('p');
-        //         var s = document.createElement('small');
-        //         var i = document.createElement('i');
+        console.log(user + "  " + reciever + "  " + room)
 
-        //         // Set text content's for elements
-        //         p.textContent = input.value;
-        //         s.textContent = 'Sent at ';
-        //         i.textContent = '10:23PM';
-
-        //         messageItem.className = "message-item message-item-sender";
-        //         messageItemContent.className = "message-item-content";
-
-        //         // Bind those elemnts together
-        //         s.appendChild(i);
-        //         messageItemContent.appendChild(p);
-        //         messageItemContent.appendChild(s);
-        //         messageItem.appendChild(messageItemContent);
-
-        //         // Add the messageItem element to the messages element
-        //         messages.appendChild(messageItem);
-
-        //         // Sends message to server
-        //         // socket.emit('chat message', input.value);
-
-        //         // Clear the input field
-        //         input.value = '';
-        //         console.log('after appending', messages.children)
-        //     }
-        // });
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (input.value) {
+                socket.emit('chat message',{from:user,to:reciever,message: input.value,room:room})
+            }
+        });
 
         // Recieve from the server
-        // socket.on('chat message', function (msg) {
-        //     var item = document.createElement('li');
-        //     item.textContent = msg;
-        //     messages.appendChild(item);
-        //     window.scrollTo(0, document.body.scrollHeight);
-        // });
+        socket.on('get message', function (msg) {
+            // Create the elements for the message
+                
+            var messageItem = document.createElement('div');
+                var messageItemContent = document.createElement('div');
+                var p = document.createElement('p');
+                var s = document.createElement('small');
+                var i = document.createElement('i');
+
+                // Set text content's for elements
+                p.textContent = msg.msg;
+                s.textContent = 'Sent at ';
+                i.textContent = '10:23PM';
+                if(user===msg.from){
+                messageItem.className = "message-item message-item-reciever";
+                messageItemContent.className = "message-item-content";
+                }else{
+                    messageItem.className = "message-item message-item-sender";
+                    messageItemContent.className = "message-item-content";
+                }
+                // Bind those elemnts together
+                s.appendChild(i);
+                messageItemContent.appendChild(p);
+                messageItemContent.appendChild(s);
+                messageItem.appendChild(messageItemContent);
+
+                // Add the messageItem element to the messages element
+                messages.appendChild(messageItem);
+
+                // Clear the input field
+                input.value = '';
+                console.log('after appending', messages.children)
+        });
     </script>
 </body>
 
