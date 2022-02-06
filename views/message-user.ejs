@@ -15,19 +15,26 @@
             <p>Some User</p>
         </div>
         <div class="messages" id="messages">
-            <% for (var i = 0; i < messages.length; i++) { %>
-                <div class="message-item message-item-<%= (messages[i].fromUserId.toLowerCase() === user.toLowerCase()) ? 'reciever' : 'sender' %>">
+            <% for (var i=0; i < messages.length; i++) { %>
+                <div
+                    class="message-item message-item-<%= (messages[i].fromUserId.toLowerCase() === user.toLowerCase()) ? 'right' : 'left' %>">
                     <div class="message-item-content">
-                        <p><%= messages[i].message %></p>
+                        <p>
+                            <%= messages[i].message %>
+                        </p>
                         <small>
-                            Sent at <i><%= messages[i].createdOn %></i>
+                            Sent at <i>
+                                <%= messages[i].createdOn %>
+                            </i>
                         </small>
                     </div>
-                </div> 
-            <% } %>
+                </div>
+                <% } %>
         </div>
-        <form  action="/sendMessage/Denis24-jtran" method="post" id= "form">
-            <input name="input" id="input" autocomplete="off" />
+    </div>
+    <div class="form-container">
+        <form id="send-message-form">
+            <input name="input" id="message-input" autocomplete="off" />
             <button id="sendButton" type="submit">Send</button>
         </form>
     </div>
@@ -35,58 +42,58 @@
 
     <script>
         var socket = io();
-        
+
         var messages = document.getElementById('messages');
-        var form = document.getElementById('form');
-        var input = document.getElementById('input');
+        var form = document.getElementById('send-message-form');
+        var input = document.getElementById('message-input');
         var user = "<%= user %>"
         var reciever = "<%= receiver %>"
         var room = "<%= room %>"
 
-        socket.emit("join",room)
+        socket.emit("join", room)
 
         console.log(user + "  " + reciever + "  " + room)
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             if (input.value) {
-                socket.emit('chat message',{from:user,to:reciever,message: input.value,room:room})
+                socket.emit('chat message', { from: user, to: reciever, message: input.value, room: room })
             }
         });
 
         // Recieve from the server
         socket.on('get message', function (msg) {
             // Create the elements for the message
-                
+
             var messageItem = document.createElement('div');
-                var messageItemContent = document.createElement('div');
-                var p = document.createElement('p');
-                var s = document.createElement('small');
-                var i = document.createElement('i');
+            var messageItemContent = document.createElement('div');
+            var p = document.createElement('p');
+            var s = document.createElement('small');
+            var i = document.createElement('i');
 
-                // Set text content's for elements
-                p.textContent = msg.msg;
-                s.textContent = 'Sent at ';
-                i.textContent = '10:23PM';
-                if(user===msg.from){
-                messageItem.className = "message-item message-item-reciever";
-                messageItemContent.className = "message-item-content";
-                }else{
-                    messageItem.className = "message-item message-item-sender";
-                    messageItemContent.className = "message-item-content";
-                }
-                // Bind those elemnts together
-                s.appendChild(i);
-                messageItemContent.appendChild(p);
-                messageItemContent.appendChild(s);
-                messageItem.appendChild(messageItemContent);
+            // Set text content's for elements
+            p.textContent = msg.msg;
+            s.textContent = 'Sent at ';
+            i.textContent = '10:23PM';
+            if (user === msg.from) {
+                messageItem.className = "message-item message-item-right";
+            } else {
+                messageItem.className = "message-item message-item-left";
+            }
+            messageItemContent.className = "message-item-content";
+            // Bind those elemnts together
+            s.appendChild(i);
+            messageItemContent.appendChild(p);
+            messageItemContent.appendChild(s);
+            messageItem.appendChild(messageItemContent);
 
-                // Add the messageItem element to the messages element
-                messages.appendChild(messageItem);
+            // Add the messageItem element to the messages element
+            messages.appendChild(messageItem);
 
-                // Clear the input field
-                input.value = '';
-                console.log('after appending', messages.children)
+            // Clear the input field
+            input.value = '';
+            console.log('after appending', messages.children)
+            window.scrollTo(0,document.body.scrollHeight);
         });
     </script>
 </body>

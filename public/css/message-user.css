@@ -1,7 +1,7 @@
 /* MESSAGE USER STYLING */
 @import './constants.css';
 
-#form {
+#send-message-form {
     background: var(--main-blue);
     padding: 0.25rem;
     position: fixed;
@@ -14,7 +14,7 @@
     backdrop-filter: blur(10px);
 }
 
-#input {
+#message-input {
     border: none;
     padding: 0 1rem;
     flex-grow: 1;
@@ -22,11 +22,11 @@
     margin: 0.25rem;
 }
 
-#input:focus {
+#message-input:focus {
     outline: none;
 }
 
-#form>button {
+#send-message-form>button {
     background: #ebebeb;
     border: none;
     padding: 0 1rem;
@@ -34,6 +34,10 @@
     border-radius: 3px;
     outline: none;
     color: black;
+}
+
+.message-container {
+    padding-bottom: 6vh;
 }
 
 .messages {
@@ -49,12 +53,12 @@
     flex: 1;
 }
 
-.message-item-sender {
+.message-item-left {
     margin-right: auto;
     background-color: rgb(164 179 195);
 }
 
-.message-item-reciever {
+.message-item-right {
     margin-left: auto;
     background-color: #ebebeb;
 }
@@ -79,14 +83,6 @@
 }
 
 @media screen and (max-width: 569px) {
-    .message-item-sender {
-        float: none;
-    }
-
-    .message-item-reciever {
-        float: none;
-    }
-
     .message-item {
         width: 100%;
     }
