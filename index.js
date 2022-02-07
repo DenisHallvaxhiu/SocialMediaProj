@@ -34,6 +34,10 @@ app.use(flash());
 
 
 // ROUTES
+app.get('/test', (req, res) => {
+  res.render('test');
+})
+
 app.get('/', middlewares.isLoggedIn, (req, res) => {
   res.render('login', { message: '' });
 })
@@ -69,10 +73,10 @@ app.get('/profile', middlewares.isAuthenticate, (req, res) => {
 
   connection.query("SELECT * FROM User LEFT JOIN post ON User.username = Post.username WHERE User.username = ? ORDER BY ID DESC;", [username], (err, result) => {
     if (err)
-      res.render('profile', { posts: [], message: 'There was an error loading the posts' });
+      res.render('test', { posts: [], message: 'There was an error loading the posts' });
     else {
       const posts = result;
-      res.render('profile', { posts: posts, button: true, msg: false });
+      res.render('test', { posts: posts, button: true, msg: false });
     }
   })
 })

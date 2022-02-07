@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 40px;
+        }
+
+        .sidebar {
+            grid-area: sidebar;
+        }
+
+        .content {
+            grid-area: content;
+        }
+
+        .header {
+            grid-area: header;
+        }
+
+        .profile {
+            grid-area: profile;
+        }
+
+        .wrapper {
+            display: grid;
+            grid-gap: 10px;
+            grid-template-columns: 33.3% 33.3% 33.3%;
+            grid-template-areas:
+                "header header header"
+                "header header profile"
+                "content content sidebar";
+            background-color: #fff;
+            color: #444;
+        }
+
+
+        .box {
+            background-color: #444;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 150%;
+        }
+
+        .header,
+        .footer {
+            background-color: #999;
+        }
+
+        @media screen and (max-width:599px) {
+            .wrapper {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="box header">Header</div>
+        <div class="box profile">Profile</div>
+        <div class="box sidebar">Sidebar</div>
+        <div class="box content">Content
+            <br /> More content than we had before so this column is now quite tall.
+        </div>
+    </div>
+</body>
+
+</html>
