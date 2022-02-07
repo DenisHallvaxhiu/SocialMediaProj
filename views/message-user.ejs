@@ -51,19 +51,15 @@
         var user = "<%= user %>"
         var reciever = "<%= receiver %>"
         var room = "<%= room %>"
-        
+
         // When webpage is loaded and ready -- 
         // NOTE: we want to scroll to the bottom when the webpage is ready otherwise if we scroll before the messages load up it won't scroll properly
         // REFERENCE: https://stackoverflow.com/questions/807878/how-to-make-javascript-execute-after-page-load -- for initial load
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             socket.emit("join", room)  // join room
-            window.scrollTo(0, document.body.scrollHeight); // scroll to the bottom
-        })
-
-        // REFERENCE: https://stackoverflow.com/questions/3664381/force-page-scroll-position-to-top-at-page-refresh-in-html -- for when refreshing
-        window.addEventListener('beforeunload', function() {
-            socket.emit("join", room)  // join room
-            window.scrollTo(0, document.body.scrollHeight); // scroll to the bottom
+            setTimeout(() => {
+                window.scrollTo(0, document.body.scrollHeight); 
+            }, 100) // Will scroll to bottom after a 10th of a second (NEED BETTER SOLUTION)
         })
 
         form.addEventListener('submit', function (e) {
@@ -77,7 +73,6 @@
         // Recieve from the server
         socket.on('get message', function (msg) {
             // Create the elements for the message
-
             var messageItem = document.createElement('div');
             var messageItemContent = document.createElement('div');
             var p = document.createElement('p');
