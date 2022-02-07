@@ -152,6 +152,7 @@ io.on('connection',(socket)=>{
   })
 
   socket.on('join',room=>{
+    console.log(io);
     console.log("joined room " + room)
     socket.join(room)
   })

@@ -10,33 +10,35 @@
 </head>
 
 <body>
-    <div class="message-container">
+    <div class="message-main-container">
         <div class="message-user-header">
             <p>Some User</p>
         </div>
-        <div class="messages" id="messages">
-            <% for (var i=0; i < messages.length; i++) { %>
-                <div
-                    class="message-item message-item-<%= (messages[i].fromUserId.toLowerCase() === user.toLowerCase()) ? 'right' : 'left' %>">
-                    <div class="message-item-content">
-                        <p>
-                            <%= messages[i].message %>
-                        </p>
-                        <small>
-                            Sent at <i>
-                                <%= messages[i].createdOn %>
-                            </i>
-                        </small>
+        <div class="message-container">
+            <div class="messages" id="messages">
+                <% for (var i=0; i < messages.length; i++) { %>
+                    <div
+                        class="message-item message-item-<%= (messages[i].fromUserId.toLowerCase() === user.toLowerCase()) ? 'right' : 'left' %>">
+                        <div class="message-item-content">
+                            <p>
+                                <%= messages[i].message %>
+                            </p>
+                            <small>
+                                Sent at <i>
+                                    <%= messages[i].createdOn %>
+                                </i>
+                            </small>
+                        </div>
                     </div>
-                </div>
-                <% } %>
+                    <% } %>
+            </div>
         </div>
-    </div>
-    <div class="form-container">
-        <form id="send-message-form">
-            <input name="input" id="message-input" autocomplete="off" />
-            <button id="sendButton" type="submit">Send</button>
-        </form>
+        <div class="form-container">
+            <form id="send-message-form">
+                <input name="input" id="message-input" autocomplete="off" />
+                <button id="sendButton" type="submit">Send</button>
+            </form>
+        </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
 
@@ -49,15 +51,26 @@
         var user = "<%= user %>"
         var reciever = "<%= receiver %>"
         var room = "<%= room %>"
+        
+        // When webpage is loaded and ready -- 
+        // NOTE: we want to scroll to the bottom when the webpage is ready otherwise if we scroll before the messages load up it won't scroll properly
+        // REFERENCE: https://stackoverflow.com/questions/807878/how-to-make-javascript-execute-after-page-load -- for initial load
+        window.addEventListener('load', function() {
+            socket.emit("join", room)  // join room
+            window.scrollTo(0, document.body.scrollHeight); // scroll to the bottom
+        })
 
-        socket.emit("join", room)
-
-        console.log(user + "  " + reciever + "  " + room)
+        // REFERENCE: https://stackoverflow.com/questions/3664381/force-page-scroll-position-to-top-at-page-refresh-in-html -- for when refreshing
+        window.addEventListener('beforeunload', function() {
+            socket.emit("join", room)  // join room
+            window.scrollTo(0, document.body.scrollHeight); // scroll to the bottom
+        })
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             if (input.value) {
                 socket.emit('chat message', { from: user, to: reciever, message: input.value, room: room })
+                input.value = '';
             }
         });
 
@@ -91,9 +104,7 @@
             messages.appendChild(messageItem);
 
             // Clear the input field
-            input.value = '';
-            console.log('after appending', messages.children)
-            window.scrollTo(0,document.body.scrollHeight);
+            window.scrollTo(0, document.body.scrollHeight);
         });
     </script>
 </body>
