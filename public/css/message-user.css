@@ -38,6 +38,7 @@
 
 .message-container {
     padding-bottom: 6vh;
+    padding-top: 12vh;
 }
 
 .messages {
@@ -64,6 +65,11 @@
 }
 
 .message-user-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
     text-align: center;
     padding: 20px 0px;
     background-color: var(--main-blue);

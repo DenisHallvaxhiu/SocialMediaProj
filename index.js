@@ -59,27 +59,27 @@ app.get('/dashboard', middlewares.isAuthenticate, (req, res) => {
   })
 })
 
-app.get('/conversation',middlewares.isAuthenticate,(req,res)=>{
-    res.render('conversation')
+app.get('/conversation', middlewares.isAuthenticate, (req, res) => {
+  res.render('conversation')
 })
 
 app.get('/profile', middlewares.isAuthenticate, (req, res) => {
 
   let username = req.session.passport.user;
-  //SELECT p.*, u.firstName, u.lastName FROM Post p, User u WHERE p.username = 'Denis24' AND u.username = 'Denis24' ORDER BY ID DESC;
+
   connection.query("SELECT * FROM User LEFT JOIN post ON User.username = Post.username WHERE User.username = ? ORDER BY ID DESC;", [username], (err, result) => {
     if (err)
       res.render('profile', { posts: [], message: 'There was an error loading the posts' });
     else {
       const posts = result;
-      res.render('profile', { posts: posts, button: true ,msg:false});
+      res.render('profile', { posts: posts, button: true, msg: false });
     }
   })
 })
 
 app.get(`/profile/:username`, (req, res) => {
   let user = req.params.username;
-  let user2 =req.session.passport.user;
+  let user2 = req.session.passport.user;
   let roomId;
   connection.query("SELECT * FROM User LEFT JOIN post ON User.username = Post.username WHERE User.username = ? ORDER BY ID DESC;", [user], (err, result) => {
     if (err)
@@ -87,13 +87,13 @@ app.get(`/profile/:username`, (req, res) => {
     else {
       console.log(result)
       const posts = result;
-      if(user2<user)
-        roomId= user2.toLowerCase()+"-"+user.toLowerCase()
+      if (user2 < user)
+        roomId = user2.toLowerCase() + "-" + user.toLowerCase()
       else
-        roomId=user.toLowerCase()+"-"+user2.toLowerCase()
+        roomId = user.toLowerCase() + "-" + user2.toLowerCase()
 
-      res.render('profile', { posts: posts, button: false ,msg:true,user:user,room:roomId});
-  }
+      res.render('profile', { posts: posts, button: false, msg: true, user: user, room: roomId });
+    }
   })
 })
 
@@ -116,17 +116,15 @@ app.get('/search', (req, res) => {
   })
 })
 
-
-
 // Endpoint to handle the creation of a user's post
 app.post('/createPost', middlewares.isAuthenticate, (req, res) => {
   // Extract the emotion, thoughts, and the username 
-
   let thought = req.body.thoughtsFields;
   let emotion = req.body.emotionSelection;
   let today = new Date();
   let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   let user = req.session.passport.user;
+
   connection.query("INSERT INTO post (`mood`, `date`, `username`, `thought`) VALUES (?,?,?,?)", [emotion, date, user, thought], (err, result) => {
     if (err) {
       console.log(err)
@@ -138,20 +136,21 @@ app.post('/createPost', middlewares.isAuthenticate, (req, res) => {
 
 })
 
-io.on('connection',(socket)=>{
+io.on('connection', (socket) => {
 
-  socket.on('chat message',msg=>{
-    connection.query("Insert into messages (roomId,fromUserId,toUserId,message) Values (?,?,?,?)",[msg.room,msg.from,msg.to,msg.message],(err,result)=>{
-      if(err){
+  socket.on('chat message', msg => {
+    connection.query("Insert into messages (roomId,fromUserId,toUserId,message) Values (?,?,?,?)", [msg.room, msg.from, msg.to, msg.message], (err, result) => {
+      if (err) {
         console.log(err)
-      }else{
+      } else {
         console.log("Saved to db")
       }
     })
-    io.to(msg.room).emit('get message',{msg:msg.message,from:msg.from,to:msg.to})
+    io.to(msg.room).emit('get message', { msg: msg.message, from: msg.from, to: msg.to })
   })
 
-  socket.on('join',room=>{
+  socket.on('join', room => {
+    console.log(io);
     console.log("joined room " + room)
     socket.join(room)
   })
@@ -170,19 +169,17 @@ app.get('/deletePost/:postId', middlewares.isAuthenticate, function (req, res) {
 })
 
 
-
 app.get('/messageUser/:roomId', middlewares.isAuthenticate, function (req, res) {
   // NEED TO DO: Check if there is a room under that ID, if not create one, otherwise retrieve messages
-  
-
   var roomID = req.params.roomId;
   var user = req.session.passport.user.toLowerCase();
-  
   var users = roomID.split('-')
-  
-  var toUser= (users[0]===user)?users[1]:users[0]
+  var toUser = (users[0] === user) ? users[1] : users[0]
 
-  console.log(user + "   " +" test  " + toUser)
+  // If room id does not consist the user, then redirect to the dashboard
+  if (!(users[0].toLowerCase() === user.toLowerCase() || users[1].toLowerCase() === user.toLowerCase())) {
+    return res.redirect('/dashboard')
+  }
 
   connection.query("SELECT * FROM rooms WHERE id = ?", [roomID], (err, result) => {
     if (err) console.log(err);
@@ -193,15 +190,14 @@ app.get('/messageUser/:roomId', middlewares.isAuthenticate, function (req, res) 
         connection.query("INSERT INTO rooms(id) VALUES(?);", [roomID], (err, result) => {
           if (err) console.log(err);
         })
-        return res.render('message-user', { messages: [], user: user , receiver: toUser,room:roomID});
-      } 
+        return res.render('message-user', { messages: [], user: user, receiver: toUser, room: roomID });
+      }
       // otherwise retrieve messsages from room
       else {
         connection.query("SELECT * FROM messages WHERE roomId = ?", [roomID], (err, messages) => {
           if (err) console.log(err);
           else {
-            console.log(messages[0].fromUserId.toLowerCase() +"  "+ user.toLowerCase())
-            return res.render('message-user', { messages: messages, user: user,receiver: toUser,room:roomID });
+            return res.render('message-user', { messages: messages, user: user, receiver: toUser, room: roomID });
           }
         })
       }
@@ -242,8 +238,6 @@ app.post('/loginUser', passport.authenticate('local-login', {
 }));
 
 // ROUTES END
-
-
 http.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
