@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/navbar.css">
     <title>Document</title>
     <style>
         body {
@@ -21,6 +22,11 @@
 
         .header {
             grid-area: header;
+            margin-top: 4vh;
+        }
+
+        .navbar {
+            grid-area: navbar;
         }
 
         .profile {
@@ -30,22 +36,14 @@
         .wrapper {
             display: grid;
             grid-gap: 10px;
-            grid-template-columns: 33.3% 33.3% 33.3%;
+            grid-template-columns: 33% 33% 33%;
             grid-template-areas:
+                "navbar navbar navbar"
                 "header header header"
-                "header header profile"
+                "profile profile profile"
                 "content content sidebar";
             background-color: #fff;
             color: #444;
-        }
-
-
-        .box {
-            background-color: #444;
-            color: #fff;
-            border-radius: 5px;
-            padding: 10px;
-            font-size: 150%;
         }
 
         .header,
@@ -59,16 +57,155 @@
                 flex-direction: column;
             }
         }
+
+        .card {
+            margin: 10px 0px;
+            border-radius: 10px;
+            background-color: var(--main-grey);
+            padding: 12px;
+        }
+
+        .card .card-date-tag {
+            margin: 0.5rem 1rem;
+        }
+
+        .card-profile-img-container {
+            padding: 16px;
+        }
+
+        .card-profile-img-container img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+        }
+
+        .card-body {
+            flex: 1;
+        }
+
+        .card-info-info {
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1170px;
+            padding-top: 10em;
+        }
+
+        .post-form-container {
+            margin: 20px 0px;
+        }
+
+        .button-post-this {
+            background-color: whitesmoke;
+            color: black;
+        }
+
+        .post-form-container>form>textarea {
+            width: 100%;
+            height: 15vh;
+            border-radius: 5px;
+            border: #dfdcdc solid 1px;
+            padding: 10px;
+            resize: none;
+        }
+
+        .button-container {
+            text-align: right;
+        }
     </style>
 </head>
 
 <body>
     <div class="wrapper">
-        <div class="box header">Header</div>
-        <div class="box profile">Profile</div>
-        <div class="box sidebar">Sidebar</div>
-        <div class="box content">Content
-            <br /> More content than we had before so this column is now quite tall.
+        <header class="navbar" id="header">
+            <a href="#" class="logo">Dog Media</a>
+            <div class="navigation">
+                <ul class="menu">
+                    <li class="menu-item"><a href="#">Search Bar</a></li>
+                    <li class="menu-item"><a href="/profile">Profile</a></li>
+                    <li class="menu-item"><a href="/dashboard">Home</a></li>
+                    <li class="menu-item"><a href="#">Message</a></li>
+                    <li class="menu-item">
+                        <a class="sub-btn" href="#">More<i class="fas fa-angle-down"></i> </a>
+                        <ul class="sub-menu">
+                            <li class="sub-item"><a href="#">Account</a></li>
+                            <li class="sub-item"><a href="#">Settings</a></li>
+                            <li class="sub-item"><a href="#">Help</a></li>
+                            <li class="sub-item"><a href="/logOut">Log Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <div class="header">
+            <img style="width: 100%; height: 200px;" id="top_pic"
+                src="https://i.pinimg.com/originals/d5/32/85/d5328537c1da64a96c15d094bfc31f7a.jpg" alt="">
+        </div>
+        <div class="profile">
+            <div style="display:flex;" class="profile-wrapper">
+                <img style="width: 50%;flex:1; " id="profile_pic" src=<%=posts[0].picture%> alt="">
+                <button style="flex:1" id="message"><a>>Message</a></button>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="description-container">
+                <h1>
+                    <%=posts[0].firstName + " " + posts[0].lastName%>
+                </h1>
+                <p>
+                    <%=posts[0].description%>
+                </p>
+            </div>
+        </div>
+        <div class="content">
+            <!-- Main class where we show all the posts we have published -->
+            <main class="main_content">
+                <!-- If the ID of a post is NULL that means that the user has no posts -->
+                <% if (posts[0].ID !==null) { %>
+                    <% for (var i=0; i < posts.length; i++) { %>
+                        <div class="card">
+                            <div class="row">
+                                <div class="profile-container col-2">
+                                    <div class="card-profile-img-container">
+                                        <img src="<%=posts[i].picture%>" width="100%" />
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <p>
+                                            Mood: &#<%= posts[i]['mood'] %>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="posts-content col-10">
+                                    <div class="card-body">
+                                        <%= posts[i]['thought'] %>
+                                    </div>
+                                    <div class="card-info-info">
+                                        <p class="card-date-tag"><small class="text-muted">
+                                                <%= posts[i]['date'] %> <small> by <%= posts[i]['username'] %></small>
+                                            </small></p>
+                                    </div>
+                                    <%if(button){%>
+                                        <button id="delete"><a href=<%="/deletePost/" +
+                                                posts[i]["ID"]%>>Delete</a></button>
+                                        <%}%>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                            <% } else { %>
+                                <div class="card">
+                                    <p>There are no posts...</p>
+                                </div>
+                                <% } %>
+
+                                    <% if (locals.message) { %>
+                                        <p>
+                                            <%= message %>
+                                        </p>
+                                        <% } %>
+
+            </main>
         </div>
     </div>
 </body>
