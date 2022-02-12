@@ -41,7 +41,6 @@
         </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
-
     <script>
         var socket = io();
 
@@ -58,7 +57,7 @@
         window.addEventListener('load', function () {
             socket.emit("join", room)  // join room
             setTimeout(() => {
-                window.scrollTo(0, document.body.scrollHeight); 
+                window.scrollTo(0, document.body.scrollHeight);
             }, 100) // Will scroll to bottom after a 10th of a second (NEED BETTER SOLUTION)
         })
 
@@ -83,6 +82,7 @@
             p.textContent = msg.msg;
             s.textContent = 'Sent at ';
             i.textContent = '10:23PM';
+
             if (user === msg.from) {
                 messageItem.className = "message-item message-item-right";
             } else {
@@ -102,6 +102,7 @@
             window.scrollTo(0, document.body.scrollHeight);
         });
     </script>
+
 </body>
 
 </html>

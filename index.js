@@ -35,7 +35,13 @@ app.use(flash());
 
 // ROUTES
 app.get('/', middlewares.isLoggedIn, (req, res) => {
-  res.render('login', { message: '' });
+  
+  // When user log in with the wrong credentials, there will be a flash message within the req.flash
+  // REFERENCE : https://stackoverflow.com/questions/52567859/how-to-flash-a-message-from-passport-js
+  
+  // If there is a login message get the message from the array, otherwise make value an empty string
+  const message = req.flash('loginMessage')[0] || '';
+  res.render('login', { message: message });
 })
 
 app.get('/register', middlewares.isLoggedIn, (req, res) => {
