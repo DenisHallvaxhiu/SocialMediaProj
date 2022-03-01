@@ -12,9 +12,6 @@ const io = require("socket.io")(http);
 const passport = require('passport');
 const flash = require('connect-flash')
 const session = require('express-session');
-const { redirect } = require('express/lib/response');
-const { use } = require('passport');
-const { Socket } = require('socket.io');
 require('./passport')(passport); // pass passport for configuration
 
 
@@ -34,10 +31,6 @@ app.use(flash());
 
 
 // ROUTES
-app.get('/test', (req, res) => {
-  res.render('test');
-})
-
 app.get('/', middlewares.isLoggedIn, (req, res) => {
   res.render('login', { message: '' });
 })
@@ -73,10 +66,10 @@ app.get('/profile', middlewares.isAuthenticate, (req, res) => {
 
   connection.query("SELECT * FROM User LEFT JOIN post ON User.username = Post.username WHERE User.username = ? ORDER BY ID DESC;", [username], (err, result) => {
     if (err)
-      res.render('test', { posts: [], message: 'There was an error loading the posts' });
+      res.render('profilev2', { posts: [], message: 'There was an error loading the posts' });
     else {
       const posts = result;
-      res.render('test', { posts: posts, button: true, msg: false });
+      res.render('profilev2', { posts: posts, button: true, msg: false });
     }
   })
 })
@@ -87,7 +80,7 @@ app.get(`/profile/:username`, (req, res) => {
   let roomId;
   connection.query("SELECT * FROM User LEFT JOIN post ON User.username = Post.username WHERE User.username = ? ORDER BY ID DESC;", [user], (err, result) => {
     if (err)
-      res.render('profile', { posts: [], message: 'There was an error loading the posts' });
+      res.render('profilev2', { posts: [], message: 'There was an error loading the posts' });
     else {
       console.log(result)
       const posts = result;
@@ -96,7 +89,7 @@ app.get(`/profile/:username`, (req, res) => {
       else
         roomId = user.toLowerCase() + "-" + user2.toLowerCase()
 
-      res.render('profile', { posts: posts, button: false, msg: true, user: user, room: roomId });
+      res.render('profilev2', { posts: posts, button: false, msg: true, user: user, room: roomId });
     }
   })
 })
@@ -141,7 +134,6 @@ app.post('/createPost', middlewares.isAuthenticate, (req, res) => {
 })
 
 io.on('connection', (socket) => {
-
   socket.on('chat message', msg => {
     connection.query("Insert into messages (roomId,fromUserId,toUserId,message) Values (?,?,?,?)", [msg.room, msg.from, msg.to, msg.message], (err, result) => {
       if (err) {
@@ -222,8 +214,8 @@ app.post('/registerUser', async (req, res) => {
       console.log(userName + " exists")
     }
     else {
-      connection.query("INSERT INTO  user (`username`, `password`, `firstName`, `lastName`, `email`) VALUES ('" + userName + "','" + hashedPassword + "','" + firstName + "','" + lastName + "','" + email + "')"
-        , (err, result) => {
+      connection.query("INSERT INTO user (username, password, firstName, lastName, email) VALUES (?,?,?,?,?)", [userName, hashedPassword, firstName, lastName, email],
+        (err, result) => {
           if (err) {
             console.log(err)
           }

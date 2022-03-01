@@ -19,7 +19,8 @@
             border: 5px dotted lightblue;
             padding: 10px;
         }
-        #name{
+
+        #name {
             text-align: center;
         }
 
@@ -31,7 +32,8 @@
             grid-area: header;
             margin-top: 4vh;
         }
-        #top_pic{
+
+        #top_pic {
             width: 100%;
             height: 400px;
             background-size: 50%;
@@ -50,12 +52,13 @@
             grid-area: profile;
         }
 
-        #profile_pic{
+        #profile_pic {
             border-radius: 50%;
             width: 25vh;
             height: 25vh;
         }
-        #message{
+
+        #message {
             margin-left: 10px;
             width: 100px;
             height: 25px;
@@ -67,7 +70,8 @@
             transition: ease-out 0.3s;
             outline: none;
         }
-        #message:hover{
+
+        #message:hover {
             box-shadow: inset 100px 0 0 0 lightblue;
         }
 
@@ -86,7 +90,8 @@
                 display: flex;
                 flex-direction: column;
             }
-            .sidebar{
+
+            .sidebar {
                 margin-left: 0px;
             }
         }
@@ -133,7 +138,7 @@
             display: block;
         }
 
-        #delete{
+        #delete {
             margin-left: 50%;
             margin-bottom: 10px;
         }
@@ -163,13 +168,14 @@
             </div>
         </header>
         <div class="header">
-            <img  id="top_pic"
-                src="https://i.pinimg.com/originals/d5/32/85/d5328537c1da64a96c15d094bfc31f7a.jpg" alt="">
+            <img id="top_pic" src="https://i.pinimg.com/originals/d5/32/85/d5328537c1da64a96c15d094bfc31f7a.jpg" alt="">
         </div>
         <div class="profile">
             <div class="profile-wrapper">
                 <img id="profile_pic" src=<%=posts[0].picture%> alt="">
-                <button  id="message"><a style="text-decoration: none;" href="/dashboard">Message</a></button>
+                <%if(msg){%>
+                    <button id="message"><a style="text-decoration: none;" href=<%="/messageUser/" + room%>>Message</a></button>
+                <% } %>
             </div>
         </div>
         <div class="sidebar">
@@ -178,11 +184,7 @@
                     <%=posts[0].firstName + " " + posts[0].lastName%>
                 </h1>
                 <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Enim quod distinctio doloribus quis porro vel tempora eos dolores officia alias iusto veritatis illo accusamus, qui quibusdam sapiente ducimus repudiandae velit?
-                    Ipsum aut suscipit, at sunt, ab non eveniet vero odit necessitatibus beatae dolor nisi tempore quisquam fugit mollitia ad sint placeat neque explicabo. Id, cumque! Nobis aut repellat consequatur? Reprehenderit.
-                    Inventore, esse ipsa distinctio dignissimos sequi iure necessitatibus odit quam sit fugit accusamus quisquam similique amet fugiat hic. Ad voluptates adipisci minima asperiores inventore accusantium animi similique rem quibusdam ullam.
-                    Voluptatum eos optio enim aperiam in quis totam, dolore nisi sapiente officia possimus tempore et magni nulla voluptatibus, quo tenetur sunt illum qui asperiores, esse non! Harum nostrum et quaerat!
-                    Omnis magnam quaerat, quasi animi illum dicta atque deserunt ullam dolore aut. At blanditiis id, qui accusamus aliquam eaque. Culpa esse consectetur delectus impedit perspiciatis voluptatibus accusamus aspernatur dignissimos sunt.
+                    <%=posts[0].description%>
                 </p>
             </div>
         </div>
@@ -213,13 +215,12 @@
                                                 <%= posts[i]['date'] %> <small> by <%= posts[i]['username'] %></small>
                                             </small></p>
                                     </div>
-                                   
+
                                 </div>
-                        
+
                             </div>
                             <%if(button){%>
-                                <button id="delete"><a href=<%="/deletePost/" +
-                                        posts[i]["ID"]%>>Delete</a></button>
+                                <button id="delete"><a href=<%="/deletePost/" + posts[i]["ID"]%>>Delete</a></button>
                                 <%}%>
                         </div>
                         <% } %>
