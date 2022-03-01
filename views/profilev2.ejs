@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 40px;
+        }
+
+        .sidebar {
+            margin-top: 12px;
+            margin-left: 50px;
+            grid-area: sidebar;
+            border: 5px dotted lightblue;
+            padding: 10px;
+        }
+
+        #name {
+            text-align: center;
+        }
+
+        .content {
+            grid-area: content;
+        }
+
+        .header {
+            grid-area: header;
+            margin-top: 4vh;
+        }
+
+        #top_pic {
+            width: 100%;
+            height: 400px;
+            background-size: 50%;
+            background-position: top;
+            object-fit: unset;
+            border-radius: 1%;
+        }
+
+        .navbar {
+            grid-area: navbar;
+        }
+
+        .profile {
+            margin-left: 50px;
+            margin-top: 12vh;
+            grid-area: profile;
+        }
+
+        #profile_pic {
+            border-radius: 50%;
+            width: 25vh;
+            height: 25vh;
+        }
+
+        #message {
+            margin-left: 10px;
+            width: 100px;
+            height: 25px;
+            border: 0;
+            color: black;
+            background-color: lightgray;
+            border-radius: 4px;
+            box-shadow: inset 0 0 0 0 lightblue;
+            transition: ease-out 0.3s;
+            outline: none;
+        }
+
+        #message:hover {
+            box-shadow: inset 100px 0 0 0 lightblue;
+        }
+
+        .wrapper {
+            display: grid;
+            grid-gap: 10px;
+            grid-template-columns: 33% 33% 33%;
+            grid-template-areas:
+                "navbar navbar navbar"
+                "header header profile"
+                "content content sidebar";
+        }
+
+        @media screen and (max-width:599px) {
+            .wrapper {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .sidebar {
+                margin-left: 0px;
+            }
+        }
+
+        .row {
+            display: flex;
+            border: 5 solid black;
+        }
+
+        .main_content {
+
+            padding: 5px;
+        }
+
+        .card {
+            border: 10px dashed lightblue;
+            margin: 10px 0px;
+            border-radius: 10px;
+            background-color: var(--main-grey);
+            padding: 12px;
+        }
+
+        .card .card-date-tag {
+            margin: 0.5rem 1rem;
+        }
+
+        .card-profile-img-container {
+            padding: 16px;
+        }
+
+        .card-profile-img-container img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+        }
+
+        .card-body {
+            margin-top: 20px;
+            flex: 1;
+        }
+
+        .card-info-info {
+            margin-top: 30px;
+            display: block;
+        }
+
+        #delete {
+            margin-left: 50%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="navbar" id="header">
+            <a href="#" class="logo">Dog Media</a>
+            <div class="navigation">
+                <ul class="menu">
+                    <li class="menu-item"><a href="#">Search Bar</a></li>
+                    <li class="menu-item"><a href="/profile">Profile</a></li>
+                    <li class="menu-item"><a href="/dashboard">Home</a></li>
+                    <li class="menu-item"><a href="#">Message</a></li>
+                    <li class="menu-item">
+                        <a class="sub-btn" href="#">More<i class="fas fa-angle-down"></i> </a>
+                        <ul class="sub-menu">
+                            <li class="sub-item"><a href="#">Account</a></li>
+                            <li class="sub-item"><a href="#">Settings</a></li>
+                            <li class="sub-item"><a href="#">Help</a></li>
+                            <li class="sub-item"><a href="/logOut">Log Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <div class="header">
+            <img id="top_pic" src="https://i.pinimg.com/originals/d5/32/85/d5328537c1da64a96c15d094bfc31f7a.jpg" alt="">
+        </div>
+        <div class="profile">
+            <div class="profile-wrapper">
+                <img id="profile_pic" src=<%=posts[0].picture%> alt="">
+                <%if(msg){%>
+                    <button id="message"><a style="text-decoration: none;" href=<%="/messageUser/" + room%>>Message</a></button>
+                <% } %>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="description-container">
+                <h1 id="name">
+                    <%=posts[0].firstName + " " + posts[0].lastName%>
+                </h1>
+                <p>
+                    <%=posts[0].description%>
+                </p>
+            </div>
+        </div>
+        <div class="content">
+            <!-- Main class where we show all the posts we have published -->
+            <main class="main_content">
+                <!-- If the ID of a post is NULL that means that the user has no posts -->
+                <% if (posts[0].ID !==null) { %>
+                    <% for (var i=0; i < posts.length; i++) { %>
+                        <div class="card">
+                            <div class="row">
+                                <div class="profile-container col-2">
+                                    <div class="card-profile-img-container">
+                                        <img src="<%=posts[i].picture%>" width="100%" />
+                                    </div>
+                                    <div>
+                                        <p>
+                                            Mood: &#<%= posts[i]['mood'] %>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="posts-content col-10">
+                                    <div class="card-body">
+                                        <%= posts[i]['thought'] %>
+                                    </div>
+                                    <div class="card-info-info">
+                                        <p class="card-date-tag"><small class="text-muted">
+                                                <%= posts[i]['date'] %> <small> by <%= posts[i]['username'] %></small>
+                                            </small></p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <%if(button){%>
+                                <button id="delete"><a href=<%="/deletePost/" + posts[i]["ID"]%>>Delete</a></button>
+                                <%}%>
+                        </div>
+                        <% } %>
+                            <% } else { %>
+                                <div class="card">
+                                    <p>There are no posts...</p>
+                                </div>
+                                <% } %>
+
+                                    <% if (locals.message) { %>
+                                        <p>
+                                            <%= message %>
+                                        </p>
+                                        <% } %>
+
+            </main>
+        </div>
+    </div>
+</body>
+
+</html>
