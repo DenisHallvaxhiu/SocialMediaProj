@@ -118,6 +118,7 @@
     padding: 10px;
     resize: none;
 }
+
 .button-container {
     text-align: right;
 }
@@ -133,3 +134,4 @@
         display: block;
     }
 }
+
