@@ -14,7 +14,7 @@
     <header>
         <a href="#" class="logo">Dog Media</a>
         <div class="navigation">
-            <ul class="menu">
+            <ul class="menu web">
                 <li class="menu-item">
                     <form class="search-container" method="GET" action="/search">
                         <input class="search-input" type="text" name="keyword" placeholder="Search profile" />
@@ -27,10 +27,23 @@
                 <li class="menu-item">
                     <a class="sub-btn" href="#">More<i class="fa fa-angle-down"></i> </a>
                     <ul class="sub-menu">
-                        <li class="sub-item"><a href="#">Account</a></li>
-                        <li class="sub-item"><a href="#">Settings</a></li>
-                        <li class="sub-item"><a href="#">Help</a></li>
-                        <li class="sub-item"><a href="/logOut">Log Out</a></li>
+                        <li class="menu-item"><a href="#">Account</a></li>
+                        <li class="menu-item"><a href="#">Settings</a></li>
+                        <li class="menu-item"><a href="#">Help</a></li>
+                        <li class="menu-item"><a href="/logOut">Log Out</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="menu mobile">
+                <li class="menu-item">
+                    <a class="sub-btn" href="#">More<i class="fa fa-angle-down"></i> </a>
+                    <ul class="sub-menu">
+                        <li class="menu-item"><a href="/profile">Profile</a></li>
+                        <li class="menu-item"><a href="/dashboard">Home</a></li>
+                        <li class="menu-item"><a href="/conversation">Message</a></li>
+                        <li class="menu-item"><a href="#">Account</a></li>
+                        <li class="menu-item"><a href="#">Settings</a></li>
+                        <li class="menu-item"><a href="/logOut">Log Out</a></li>
                     </ul>
                 </li>
             </ul>

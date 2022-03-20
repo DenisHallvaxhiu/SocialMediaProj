@@ -82,3 +82,20 @@ header .navigation .menu{
     margin-left: 1em;
     margin-right: 1em;
 }
+
+.navigation .mobile {
+    display: none!important;
+}
+
+
+@media screen and (max-width: 1010px) {
+    .navigation .mobile {
+        display: block!important;
+    }
+    .navigation .web {
+        display: none!important;
+    }
+    header {
+        padding: 0px 16px!important;
+    }
+}
